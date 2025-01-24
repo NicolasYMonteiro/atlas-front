@@ -1,3 +1,3 @@
 export const environment = {
-    api: 'https://junction.proxy.rlwy.net/'
+    api: 'https://atlas-back-production.up.railway.app'
 };
