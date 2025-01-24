@@ -1,0 +1,11 @@
+<section class="container">
+
+  <!-- Lista de subtarefas -->
+  <div *ngFor="let task of subTasks; let i = index; trackBy: trackByIndex " class="sub-task-item">
+    <textarea [(ngModel)]="subTasks[i]" id="textarea-subTask" class="textarea-subTask"
+    placeholder="Escreva aqui sua sub tarefa"></textarea>
+    <button type="button" (click)="removeSubTask(i)">Excluir</button>
+  </div>
+
+  <button type="button" (click)="addSubTask()">Adicionar Subtarefa</button>
+</section>

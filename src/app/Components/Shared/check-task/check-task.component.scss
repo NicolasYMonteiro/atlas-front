@@ -1,0 +1,269 @@
+@import '../../../../styles/variables';
+
+
+.section-main{
+    background-color: $primary-color;
+    width: 100%;
+    height: max-content;
+    max-height: 100%;
+    padding: 10px;
+    padding-top: 8px;
+    padding-right: 6px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 20px;
+    border-color: $border-color;
+    display: flex;
+    flex-direction: column;
+
+    .section-top{
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5px;
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+        padding-bottom: 2px;
+        border-color: $border-color;
+
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: sticky;
+        top: 0;
+        width: 100%;
+
+        p{
+            margin-top: 5px;
+            font-size: 22px;
+            font-style: italic;
+        }
+
+        .button-close{
+            position: absolute;
+            right: 0; /* Adjust right position as needed */
+            top: 0; /* Adjust top position as needed */
+            width: max-content;
+            height: max-content;
+            border-radius: 20px;
+            border-width: 0px;
+            background-color: $button-white-color;
+            
+        }
+
+        img{ 
+            cursor: pointer;
+            margin-bottom: -3px;
+            border-radius: 20px;
+        }
+
+    }
+
+    .section-body{
+        margin-top: 0px;   
+        overflow-y:auto;
+        box-sizing:content-box;
+        margin-right: -6px;
+        padding-right: 6px;
+
+    }
+
+    .section-sub {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+
+        p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .div-sub-task {
+            display: flex;
+            align-items: center;
+            margin-top: 13px;
+
+
+            p {
+                font-size: 17px;
+                font-weight: normal;
+                margin-left: 10px;
+            }
+
+            .div-buttom-alternative {
+
+                width: 22px;
+                height: 22px;
+                background-color: $button-white-color;
+                border-radius: 20px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: $border-color;
+                cursor: pointer;
+                box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
+
+                img {
+                    margin-left: 2.5px;
+                    margin-top: -3px;
+                }
+
+            }
+        }
+
+    }
+    
+
+    .section-record{
+        margin-top: 20px;
+            
+        .button-alternative-record{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+
+            .div-buttom-alternative{
+                width: 30px;
+                height: 30px;
+                background-color: $button-white-color;
+                border-radius: 20px;
+                border-style: solid;
+                border-width: 1px;
+                cursor: pointer;
+                box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.3);
+        
+                img{
+                    margin-left: 3px;
+                    margin-top: -5.5px;
+                }
+                
+            }
+
+            p{
+                margin-left: 8px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        }
+
+        .div-record{
+            display: flex;
+            align-items: center;
+            height: 130px;
+
+            .div-selectedType{
+
+                width: 20%;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                .button-type{
+                    width: 100%;
+                    background-color: $button-white-color;
+                    border-width: 1px;
+                    border-radius: 5px;
+                    height: 30px;
+                    font-size: 16px;
+
+                }
+            }
+
+            .div-type{
+                margin-left: 15px;
+                width: max-content;
+                height: 80%;
+                width: 80%;
+                display: flex;
+                align-items: center;
+                
+                textarea{
+                    width: 95%;
+                    height: 90%;
+                    border-radius: 8px;
+                    border-width: 1.5px;
+                    padding: 4px;
+                    font-size: 18px;
+                    resize: none; /* para fazer o textArea não expandir*/
+                    margin-bottom: 8px; /* para dar um espaço entre o primeiro texteArea e o paragrafo 'Descrição' abaixo dele*/
+                    box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.3);
+
+                }
+
+                input{
+                    width: 95%;
+                    font-size: 16px;
+                }
+
+            }
+        }
+
+    }
+
+    .section-buttom-save, .section-buttom-finalizar{
+        margin-top: 20px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: max-content;
+
+        button{
+            width: max-content;
+            height: 50px;
+            border-width: 1.2px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: $button-white-color;
+            box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.3);
+            border-radius: 25px;
+            padding: 0px 20px 0px 20px;
+        }
+        button:hover{
+            background-color: $button-hover-white-color;
+        }
+    
+    }
+
+}
+
+
+/* Adicionando um estilo opcional para a scrollbar */
+.section-main::-webkit-scrollbar{
+  width: 8px;
+}
+
+.textarea-record::-webkit-scrollbar{
+    width: 4px;
+}
+
+.section-main::-webkit-scrollbar-thumb, 
+.textarea-record::-webkit-scrollbar-thumb{
+  background: #a2a1a1; 
+  border-radius: 8px;
+}
+
+.textarea-main::-webkit-scrollbar-thumb:hover, 
+.textarea-record::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* Adicionando um "gap" entre a scrollbar e a borda */
+.section-main::-webkit-scrollbar-track{
+  margin-top: 15px; /* Adiciona um espaçamento na parte superior e inferior da barra de rolagem */
+  margin-bottom: 15px;
+}
+
+.textarea-record::-webkit-scrollbar-track{
+    margin-top: 5px; /* Adiciona um espaçamento na parte superior e inferior da barra de rolagem */
+    margin-bottom: 5px;
+}
+
+
+/*
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+*/

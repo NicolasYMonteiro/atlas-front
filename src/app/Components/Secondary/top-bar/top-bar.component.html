@@ -1,0 +1,33 @@
+
+    <section class = "section-main">
+        <section class = "section-menu" (click)="openSideBar()">
+            <button class = button-menu>
+                <img ngSrc = "/icon-menu.png" width="38" height="36">
+            </button>
+            
+
+        </section>    
+
+        <section class = "section-centro">
+            <!--
+            <button class = "button-list">
+                <p>All Lists</p>
+                <img ngSrc = "./seta-baixo.png" width="15" height="15">
+            </button>
+            -->
+
+            <div class = "div-logo">   
+                <a href = "/home">
+                    <h1>Desenvolvimento Atlas</h1>
+                </a> 
+            </div>
+
+        </section>
+
+        <section class = "section-user">
+            <button class = button-user (click)="navigateToPage()">
+                <img ngSrc = "/user.png" width="38" height="38">
+            </button>
+            
+        </section>
+    </section>

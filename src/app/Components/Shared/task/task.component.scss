@@ -1,0 +1,93 @@
+@import '../../../../styles/variables';
+
+.section-main{
+
+    width: 100%;
+    height: 100%;
+    padding: 0px; /* top, right, bottom, left*/
+    border-color: black;
+    border: 1.5px;
+    border-style: solid;
+    border-radius: 20px;
+    display: flex;
+    background-color: $task-color;
+    box-shadow: $card-shadow;
+
+    .section-verif{
+        background-color: $task-color;
+        border-radius: 20px 0 0 20px;
+        .div-verif{
+            background-color: $verif-color;
+            width: 35px;
+            height: 32px;
+            border-color: black;
+            border: 1.5px;
+            border-style: solid;
+            border-radius: 7px;
+            margin-right: 10px;
+            margin: 11px 12px 0 8px;
+            cursor: pointer;
+            transition: border-width 0.2s ease;  // pra suavizar o hover, lek
+        }
+        button:hover {
+            border-width: 3px;
+        }
+    }
+
+    .button-open-description{
+        background-color: #ffffff00;
+        border-radius: 20px 0 0 20px;
+
+        width: 100%;
+        flex: 1; /* Permite que a section-description cresça conforme necessário */
+        margin-left: 5px; /* Espaçamento à esquerda da section-verif */
+        white-space: nowrap; /* Impede quebra de linha */
+        overflow: hidden; /* Oculta o conteúdo que ultrapassa a largura */
+        cursor: pointer;
+        border-radius: 20px;
+        border-width: 0;
+
+        .section-description{          
+            display: flex;
+            height: 70%;
+            align-items: center;
+            text-align: left;
+            padding-right: 2px;
+            
+            p{
+                text-overflow: ellipsis; /* Adiciona reticências ao final do texto */
+                overflow: hidden; /* Garante que o texto excedente seja oculto */
+                width: max-content; /* Garante que o texto ocupe toda a largura disponível */
+                font-size: 21px;
+                margin-bottom: 10px;
+                color: $text-color;
+            }
+            
+        }
+
+        .section-data{
+            display: flex;
+
+            .p-hora{
+               font-weight: bold; 
+               margin-left: 12px;
+            }
+            p{
+                margin-left: 6px;  
+                font-size: 17.5px;
+                 /* Negrito */
+                font-style: italic;
+                color: $text-color;
+                
+            }
+            
+
+        }
+    }
+
+
+}
+section:hover{
+    border-width: 2px;
+}
+

@@ -1,0 +1,16 @@
+.div-buttom {
+    border-radius: 50px;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden; // Isso garante que a borda arredondada seja aplicada corretamente
+    
+
+    .img {
+        border-radius: 50px;
+        transition: filter 0.3s ease; // Suaviza a transição do efeito de escurecimento
+
+        &:hover {
+            filter: brightness(80%); // Escurece a imagem em 30%
+        }
+    }
+}

@@ -1,0 +1,182 @@
+@import '../../../../styles/variables';
+
+p {
+    margin: 0 0 10px 10px; /* Espaçamento inferior e margem esquerda */
+    align-self: flex-start; 
+    font-size: 21.5px;
+    font-weight: bold;
+}
+.p-emergencial{
+    color: $text-red-color;
+}
+
+.section-Add-task{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    .task-page{
+    
+        width: 80%;
+        height: max-content;
+        border-radius: 22px;
+        display: flex;
+        justify-content: center;
+
+        margin-top: 30px;
+
+    }
+}
+
+.section-Edit-task{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+    
+    display: flex;
+    justify-content: center;
+    .edit-task{
+        
+        width: 82%;
+        height: 80%;
+        border-radius: 22px;
+        display: flex;
+        justify-content: center;
+
+        margin-top: 30px;
+        
+
+    }
+}
+.section-Display-task{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+    
+    display: flex;
+    justify-content: center;
+    .display-task{
+        
+        width: 82%;
+        height: 80%;
+        border-radius: 22px;
+        display: flex;
+        justify-content: center;
+
+        margin-top: 30px;
+        
+
+    }
+}
+
+.section-Check-task{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+    
+    display: flex;
+    justify-content: center;
+
+    .check-task{
+        
+        width: 82%;
+        height: 80%;
+        border-radius: 22px;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        
+
+    }
+}
+
+@media (min-width: 768px) {
+    .section-Edit-task,
+    .section-Add-task,
+    .section-Display-task,
+    .section-Check-task{
+        width: 80%;
+    }
+
+}
+
+@media (max-height: 500px) {
+    .section-Edit-task,
+    .section-Add-task,
+    .section-Display-task,
+    .section-Check-task{
+        height: 80%;
+    }
+
+}
+
+
+
+.blur-background {
+    filter: blur(5px); /* Ajuste conforme necessário */
+    transition: filter 0.3s; /* Transição suave para o efeito de desfoque */
+}
+
+
+.section-main {
+    
+    background-color: $primary-color;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;    
+    flex-direction: column;    
+    align-items: center;
+    padding-top: 20px;
+
+    .section-task {
+        display: flex;
+        flex-direction: column; /* Empilha o parágrafo acima da div de tarefa */
+        align-items: center; /* Alinha itens ao início do contêiner */
+        width: 100%;
+        position: relative;
+        margin-bottom: 20px;
+
+
+        .div-task {
+            width: 90%; /* Ajuste conforme necessário */
+            display: flex;
+            flex-direction: column; /* Permite que as tarefas se alinhem corretamente */
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            gap: 10px; /* Espaçamento entre as tarefas */
+            padding: 10px; /* Espaçamento interno para a div de tarefa */
+            padding-right: 15px;
+
+            task {
+                margin-bottom: 10px; /* Adiciona margem entre cada tarefa */
+                width: 100%;
+                height: 95px;
+                border-radius: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            }
+
+        }
+                
+    }
+
+    .section-addButtom{
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+
+        .buttom-addButtom {
+            border-radius: 50px;
+            border-width: 0px;
+        }
+    }
+
+
+}

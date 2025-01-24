@@ -1,0 +1,13 @@
+
+<section class="section-top">
+    <topbar (sideBar)="toggleSidebar()"></topbar>
+  </section>
+
+  <section class="section-body">
+    <section class="section-sideBar" [class.open]="isSideBarVisible">
+      <side-bar></side-bar>
+    </section>
+    <section class="section-router">
+      <router-outlet></router-outlet>
+    </section>
+</section>

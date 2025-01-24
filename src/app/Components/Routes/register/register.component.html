@@ -1,0 +1,62 @@
+<section class="section-container">
+
+  <section class="slide">
+    
+  </section>
+
+  <section class="section-main">
+    <div class="div-title">
+      <h1>REGISTER</h1>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="postButton()" class="forms">
+      <section class="register-left">
+        <div class="div-name">
+          <p>Full name:</p>
+          <textarea formControlName="name" placeholder="Enter your full name..."></textarea>
+        </div>
+
+        <div class="div-User">
+          <p>Username:</p>
+          <textarea formControlName="user" placeholder="Choose a username..."></textarea>
+        </div>
+
+        <div class="div-email">
+          <p>Email:</p>
+          <textarea formControlName="email" placeholder="Enter your email address..."></textarea>
+        </div>
+      </section>
+
+      <section class="register-right">
+        <div class="div-password">
+          <p>Enter a password:</p>
+          <textarea formControlName="password" placeholder="Create a password..."></textarea>
+        </div>
+
+        <div class="div-password">
+          <p>Repeat your password:</p>
+          <textarea formControlName="passwordRepete" placeholder="Repeat your password..."></textarea>
+        </div>
+
+        <div class="div-login">
+          <a href="/login">Already have an account? Click here.</a>
+        </div>
+      </section>
+
+
+      <div class="div-message">
+        <p [ngClass]="{'error-message': message === messageError || message === messageIncomplete || message === messagePasswordMismatch}"
+          class="p-message">{{message}}</p>
+      </div>
+
+      <div class="div-button">
+        <button type="submit" class="button-login">Create an account</button>
+      </div>
+
+    </form>
+
+
+
+
+  </section>
+</section>

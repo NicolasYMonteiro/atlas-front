@@ -1,0 +1,65 @@
+
+<section class = "section-main">
+    <section class = "section-top">
+  
+      <p>Visualização de Tarefa</p>
+  
+      <button class = "button-close" (click)="closeDisplayTask()">
+        <img ngSrc = "/icon-close.png" width="30" height="30" alt="buttom-close" class = "img-close">
+      </button>
+      
+  
+    </section>
+
+    <section class = "section-body">
+      <section class = "section-text">  <!-- Título de Descrição -->
+        <p>* Título da tarefa:</p>
+        <textarea [(ngModel)]="data.title" name="title" id="textarea-title" class = "textarea-title" readonly></textarea>
+    
+        <p *ngIf="data.description">* Descrição:</p>
+        <textarea *ngIf="data.description" [(ngModel)]="data.description" name="description" id="textarea-description" class = "textarea-description" readonly></textarea>
+      </section>
+      
+      
+      <section class="section-date"> <!-- Data -->
+        <p>* Data prevista: </p>
+        <input readonly [value]="formattedDate" type="date" name="date" id="input-date" class="input-date">
+      </section>
+  
+      <section class = "section-intervalo" *ngIf="data.periodical === true"> <!-- Intervalo -->
+          <p>* Período de intervalo: </p>
+          <input readonly [(ngModel)]="intervalShow"  name="date" id="input-date" class = "input-intervalo"> <!-- Ver um jeito melhor de visualizar datas -->
+      
+      </section>
+    
+      <section class = "section-hour"> <!-- Hora -->
+        <p>* Horário programado:</p>
+        <input readonly [(ngModel)] = "data.hour" type = "time" name="time" id="input-time" class = "input-time"> <!-- Ver um jeito melhor de visualizar horas, minutos e segundos-->
+    
+      </section>
+    
+      <section class = "section-sub" *ngIf="vetorSubTask.length != 0"> <!-- Sub -->
+          <p>* Tarefas internas:</p>
+          
+          <div class = "div-sub-task" *ngFor="let tarefa of vetorSubTask">
+            <p> - {{ tarefa.title }}</p>
+          </div>
+  
+      </section>
+    
+      <section class = "section-buttom-save-discard">
+        <button class = "button-edit" (click)="EditTask()" > Editar </button>
+        <button class = "button-delete" (click)="DeleteTask()" > Excluir </button>
+
+      </section>
+
+      
+    </section>
+
+    <div class = "div-dataCreator">
+      <p>Data de criação: {{data.dateCreator}}</p>
+    </div>
+  
+  </section>
+  
+  

@@ -1,0 +1,45 @@
+<section class="section-container">
+    <section class="section-main">
+  
+      <div class="div-title"><h1>LOGIN</h1></div>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="postButton()" class="forms">
+        <div class="div-email">
+          <p>Email:</p>
+          <textarea formControlName="email" placeholder="Enter your email address..."></textarea>
+        </div>
+  
+        <div class="div-password">
+          <p>Enter a password:</p>
+          <textarea formControlName="password" placeholder="Enter your password..."></textarea>
+        </div>        
+        <div class="div-forgot">
+          <a href="/forgot-password">Forgot your password?</a>
+        </div>     
+
+        <div class="div-message">
+            <p *ngIf="message" class="error-message">{{ message }}</p>
+        </div>  
+  
+        <div class="div-options">
+          <div class="div-remember">
+            <input type="checkbox" formControlName="rememberMe" class="checkbox-remember">
+            <p>Remember me</p>
+          </div>
+  
+
+        </div>      
+        
+
+  
+        <div class="div-button">
+          <button type="submit" class="button-login">Login</button>
+        </div>
+      </form>
+
+      <div class="div-register">
+        <a href="/register">Novo por aqui? Crie um conta aqui.</a>
+      </div>
+
+    </section>
+  </section>

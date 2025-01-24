@@ -1,0 +1,77 @@
+
+<section class = "section-main">
+    <section class = "section-top">
+      <p>{{data.title}}</p>
+  
+      <button class = "button-close" (click)="closeCheckTask()">
+        <img ngSrc = "/icon-close.png" width="30" height="30" alt="buttom-close" class = "img-close" >
+      </button>
+      
+    </section>
+
+    <section class = "section-body">
+      <section class = "section-sub">
+        <p>* Tarefas internas:</p>
+        
+        <div class = "div-sub-task" *ngFor="let tarefa of vetorSubTask">
+          <button class = "div-buttom-alternative" (click)="verifSubTask(tarefa)">
+            <img src="./icon-verif-button.png" *ngIf="tarefa.verif == true" width="20px" height="20px">
+          </button>
+          <p> {{ tarefa.title }}</p>
+        </div>
+
+      </section>
+
+      <section class = "section-record">
+        <div class = "button-alternative-record">
+          <button (click)="toggleDivRecordVisibility()" class = "div-buttom-alternative" id = "alternative-record" >
+            <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="isVerificadoRecord">
+          </button>
+
+          <p>Deseja adicionar um registro?</p>
+    
+        </div>
+
+        <div class = "div-record" *ngIf="isVerificadoRecord">
+          <div class = "div-selectedType">
+            <button class = "button-type" (click)="toggleDivTextVisibility()">
+              <p>text</p>
+            </button>
+
+            <button class = "button-type" (click)="toggleDivAudioVisibility()">
+              <p>audio</p>
+            </button>
+
+            <button class = "button-type" (click)="toggleDivVideoVisibility()">
+              <p>video</p>
+            </button>
+
+          </div>
+
+          <div class = "div-type">
+            <textarea class = "textarea-record" name="text" id="text" *ngIf = "isVerificadoText"></textarea>
+
+            <input type="file" (change)="onAudioSelected($event)" accept="audio/*" *ngIf = "isVerificadoAudio">
+
+            <input type="file" (change)="onVideoSelected($event)" accept="video/*" *ngIf = "isVerificadoVideo">
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class = "section-buttom-save">
+          <button class = "button-save" (click)="salvarProgresso()" > Salvar Progresso </button>
+      </section>
+      
+
+      <section class = "section-buttom-finalizar">
+        <button class = "button-finalizar" (click)="finalizarTask()" > Finalizar Tarefa </button>
+      </section>
+
+    </section>
+
+</section>
+  
+  

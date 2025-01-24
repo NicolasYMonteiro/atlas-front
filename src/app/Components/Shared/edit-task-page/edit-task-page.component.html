@@ -1,0 +1,70 @@
+<section class="section-main">
+  <section class="section-top">
+
+    <p>Edição de Tarefa</p>
+
+    <button class="button-close" (click)="closeEditTask()">
+      <img ngSrc="/icon-close.png" width="30" height="30" alt="buttom-close" class="img-close">
+    </button>
+
+
+  </section>
+
+  <section class="section-body">
+    <section class="section-text"> <!-- Título de Descrição -->
+      <p>* Título da tarefa:</p>
+      <textarea [(ngModel)]="data.title" name="title" id="textarea-title" class="textarea-title"></textarea>
+
+      <p *ngIf="data.description">* Descrição:</p>
+      <textarea *ngIf="data.description" [(ngModel)]="data.description" name="description" id="textarea-description"
+        class="textarea-description"></textarea>
+    </section>
+
+
+    <section class="section-date"> <!-- Data -->
+      <p>* Data prevista: </p>
+      <input [(ngModel)]="formattedDate" type="date" name="date" id="input-date" class="input-date">
+    </section>
+
+    <section class="section-intervalo" *ngIf="data.periodical === true"> <!-- Intervalo -->
+      <p>* Período de intervalo: </p>
+      <select [(ngModel)]="data.interval" name="select-gap-custom" class="select-size" required>
+        <option value="30">Mensal</option>
+        <option value="91">Trimestral</option>
+        <option value="182">Semestral</option>
+        <option value="365">Anual</option>
+        <option *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21] "
+          [ngValue]=i>
+          {{i}} dia{{i > 1 ? 's' : ''}}
+        </option>
+      </select>
+
+    </section>
+
+    <section class="section-hour"> <!-- Hora -->
+      <p>* Horário programado:</p>
+      <input [(ngModel)]="data.hour" type="time" name="time" id="input-time" class="input-time">
+      <!-- Ver um jeito melhor de visualizar horas, minutos e segundos-->
+
+    </section>
+
+    <section class="section-sub">
+      <div class="div-verifSub">
+
+      </div>
+
+      <app-sub-task-create-list (SavedTask)="handleSavedTask($event)" [subTasks]="subTasks" />
+    </section>
+
+    <section class="section-buttom-save-discard">
+      <button class="button-edit" (click)="saveTask()"> Salvar </button>
+    </section>
+
+
+  </section>
+
+  <div class="div-dataCreator">
+    <p>Data de criação: {{data.dateCreator}}</p>
+  </div>
+
+</section>
