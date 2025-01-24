@@ -1,3 +1,3 @@
 export const environment = {
-    api: ''
+    api: 'http://atlas-back-production.up.railway.app'
 };
