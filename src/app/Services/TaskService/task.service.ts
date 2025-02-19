@@ -32,7 +32,7 @@ export class TaskService {
     }
   }
 
-  postTask(task: Task) {
+  postTask(task: any) {
     const token = this.token();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `${token}`);

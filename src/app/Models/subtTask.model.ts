@@ -5,10 +5,10 @@ export class SubTask {
   title: string;
   verif: boolean;
 
-  constructor(id: number, title: string, verif: any) {
+  constructor(id: number, title: string, verif: boolean) {
     this.id = id;
     this.title = title;
-    this.verif = verif === "1" || verif === 1;  // Converte para true somente se o valor for "1" ou 1
-      }
+    this.verif = verif;  // Converte para true somente se o valor for "1" ou 1
+    }
 
 }

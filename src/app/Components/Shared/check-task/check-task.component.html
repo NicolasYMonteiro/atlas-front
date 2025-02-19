@@ -1,77 +1,53 @@
+<section class="bg-gray-50 w-full max-h-full p-3 border border-gray-500 rounded-2xl flex flex-col">
+  <section class="border-b border-border-color relative flex items-center justify-center top-0 w-full pb-1">
+      <p class="mt-1 text-lg italic">{{data.title}}</p>
 
-<section class = "section-main">
-    <section class = "section-top">
-      <p>{{data.title}}</p>
-  
-      <button class = "button-close" (click)="closeCheckTask()">
-        <img ngSrc = "/icon-close.png" width="30" height="30" alt="buttom-close" class = "img-close" >
+      <button class="absolute right-0 top-0 p-1 bg-button-white-color rounded-2xl" (click)="closeCheckTask()">
+          <img ngSrc="/icon-close.png" width="30" height="30" alt="button-close" class="cursor-pointer rounded-2xl">
       </button>
-      
-    </section>
+  </section>
 
-    <section class = "section-body">
-      <section class = "section-sub">
-        <p>* Tarefas internas:</p>
-        
-        <div class = "div-sub-task" *ngFor="let tarefa of vetorSubTask">
-          <button class = "div-buttom-alternative" (click)="verifSubTask(tarefa)">
-            <img src="./icon-verif-button.png" *ngIf="tarefa.verif == true" width="20px" height="20px">
-          </button>
-          <p> {{ tarefa.title }}</p>
-        </div>
+  <section class="mt-0 overflow-y-auto pr-1">
+      <section class="mt-5 flex flex-col">
+          <p class="text-lg font-bold">* Tarefas internas:</p>
 
+          <div class="flex items-center mt-3" *ngFor="let tarefa of vetorSubTask">
+              <button class="w-6 h-6 bg-white rounded-full border border-gray-300 shadow-md flex items-center justify-center" (click)="verifSubTask(tarefa)">
+                  <img src="./icon-verif-button.png" *ngIf="tarefa.verif == true" width="20px" height="20px">
+              </button>
+              <p class="ml-2 text-base">{{ tarefa.title }}</p>
+          </div>
       </section>
 
-      <section class = "section-record">
-        <div class = "button-alternative-record">
-          <button (click)="toggleDivRecordVisibility()" class = "div-buttom-alternative" id = "alternative-record" >
-            <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="isVerificadoRecord">
-          </button>
-
-          <p>Deseja adicionar um registro?</p>
-    
-        </div>
-
-        <div class = "div-record" *ngIf="isVerificadoRecord">
-          <div class = "div-selectedType">
-            <button class = "button-type" (click)="toggleDivTextVisibility()">
-              <p>text</p>
-            </button>
-
-            <button class = "button-type" (click)="toggleDivAudioVisibility()">
-              <p>audio</p>
-            </button>
-
-            <button class = "button-type" (click)="toggleDivVideoVisibility()">
-              <p>video</p>
-            </button>
-
+      <section class="mt-5">
+          <div class="flex items-center mb-2">
+              <button (click)="toggleDivRecordVisibility()" class="w-7 h-7 bg-white rounded-full border border-gray-500 shadow-md flex items-center justify-center">
+                  <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="isVerificadoRecord">
+              </button>
+              <p class="ml-2 text-lg font-bold">Deseja adicionar um registro?</p>
           </div>
 
-          <div class = "div-type">
-            <textarea class = "textarea-record" name="text" id="text" *ngIf = "isVerificadoText"></textarea>
+          <div class="flex items-center h-[130px]" *ngIf="isVerificadoRecord">
+              <div class="w-1/5 flex flex-col gap-3">
+                  <button class="w-full bg-button-white-color border rounded h-7 text-base" (click)="toggleDivTextVisibility()">Text</button>
+                  <button class="w-full bg-button-white-color border rounded h-7 text-base" (click)="toggleDivAudioVisibility()">Audio</button>
+                  <button class="w-full bg-button-white-color border rounded h-7 text-base" (click)="toggleDivVideoVisibility()">Video</button>
+              </div>
 
-            <input type="file" (change)="onAudioSelected($event)" accept="audio/*" *ngIf = "isVerificadoAudio">
-
-            <input type="file" (change)="onVideoSelected($event)" accept="video/*" *ngIf = "isVerificadoVideo">
-
+              <div class="ml-4 w-4/5 flex items-center">
+                  <textarea class="w-[95%] h-[90%] rounded-md border p-1 text-lg resize-none shadow-md" *ngIf="isVerificadoText"></textarea>
+                  <input type="file" (change)="onAudioSelected($event)" accept="audio/*" *ngIf="isVerificadoAudio" class="w-[95%] text-base">
+                  <input type="file" (change)="onVideoSelected($event)" accept="video/*" *ngIf="isVerificadoVideo" class="w-[95%] text-base">
+              </div>
           </div>
-
-        </div>
-
       </section>
 
-      <section class = "section-buttom-save">
-          <button class = "button-save" (click)="salvarProgresso()" > Salvar Progresso </button>
-      </section>
-      
-
-      <section class = "section-buttom-finalizar">
-        <button class = "button-finalizar" (click)="finalizarTask()" > Finalizar Tarefa </button>
+      <section class="mt-5 mb-1 flex justify-center">
+          <button class="px-5 h-12 border border-gray-500 text-lg font-bold rounded-full bg-white hover:bg-gray-300 transition" (click)="salvarProgresso()">Salvar Progresso</button>
       </section>
 
-    </section>
-
+      <section class="mt-5 mb-1 flex justify-center">
+          <button class="px-5 h-12 border border-gray-500 text-lg font-bold rounded-full bg-white hover:bg-gray-300 transition" (click)="finalizarTask()">Finalizar Tarefa</button>
+      </section>
+  </section>
 </section>
-  
-  

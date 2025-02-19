@@ -1,62 +1,66 @@
-<section class="section-container">
+<section class="flex items-center justify-center w-full h-full mt-px">
+  <section class="flex flex-col p-8 border border-gray-300 bg-white shadow-lg rounded-2xl">
 
-  <section class="slide">
-    
-  </section>
-
-  <section class="section-main">
-    <div class="div-title">
+    <div class="text-center text-3xl font-bold mb-8">
       <h1>REGISTER</h1>
     </div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="postButton()" class="forms">
-      <section class="register-left">
-        <div class="div-name">
-          <p>Full name:</p>
-          <textarea formControlName="name" placeholder="Enter your full name..."></textarea>
+    <form [formGroup]="registerForm" (ngSubmit)="postButton()" class="flex flex-col space-y-6">
+
+      <!-- Lado esquerdo -->
+      <section class="space-y-6">
+        <div>
+          <p class="text-lg font-medium">Full name:</p>
+          <textarea formControlName="name" placeholder="Enter your full name..."
+            class="w-72 h-7 mt-2 border-b-2 border-gray-400 outline-none text-lg resize-none overflow-x-auto overflow-y-hidden whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-400"></textarea>
         </div>
 
-        <div class="div-User">
-          <p>Username:</p>
-          <textarea formControlName="user" placeholder="Choose a username..."></textarea>
+        <div>
+          <p class="text-lg font-medium">Username:</p>
+          <textarea formControlName="user" placeholder="Choose a username..."
+            class="w-72 h-7 mt-2 border-b-2 border-gray-400 outline-none text-lg resize-none overflow-x-auto overflow-y-hidden whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-400"></textarea>
         </div>
 
-        <div class="div-email">
-          <p>Email:</p>
-          <textarea formControlName="email" placeholder="Enter your email address..."></textarea>
+        <div>
+          <p class="text-lg font-medium">Email:</p>
+          <textarea formControlName="email" placeholder="Enter your email address..."
+            class="w-72 h-7 mt-2 border-b-2 border-gray-400 outline-none text-lg resize-none overflow-x-auto overflow-y-hidden whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-400"></textarea>
         </div>
       </section>
 
-      <section class="register-right">
-        <div class="div-password">
-          <p>Enter a password:</p>
-          <textarea formControlName="password" placeholder="Create a password..."></textarea>
+      <!-- Lado direito -->
+      <section class="space-y-6">
+        <div>
+          <p class="text-lg font-medium">Enter a password:</p>
+          <textarea formControlName="password" placeholder="Create a password..."
+            class="w-72 h-7 mt-2 border-b-2 border-gray-400 outline-none text-lg resize-none overflow-x-auto overflow-y-hidden whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-400"></textarea>
         </div>
 
-        <div class="div-password">
-          <p>Repeat your password:</p>
-          <textarea formControlName="passwordRepete" placeholder="Repeat your password..."></textarea>
+        <div>
+          <p class="text-lg font-medium">Repeat your password:</p>
+          <textarea formControlName="passwordRepete" placeholder="Repeat your password..."
+            class="w-72 h-7 mt-2 border-b-2 border-gray-400 outline-none text-lg resize-none overflow-x-auto overflow-y-hidden whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-400"></textarea>
         </div>
 
-        <div class="div-login">
+        <div class="text-center text-sm text-blue-500 hover:underline">
           <a href="/login">Already have an account? Click here.</a>
         </div>
       </section>
 
-
-      <div class="div-message">
-        <p [ngClass]="{'error-message': message === messageError || message === messageIncomplete || message === messagePasswordMismatch}"
-          class="p-message">{{message}}</p>
+      <!-- Mensagem de erro -->
+      <div class="text-right text-red-500 text-base">
+        <p *ngIf="message" class="">{{ message }}</p>
       </div>
 
-      <div class="div-button">
-        <button type="submit" class="button-login">Create an account</button>
+      <!-- Botão -->
+      <div class="flex justify-center">
+        <button type="submit"
+          class="px-6 py-3 border border-gray-300 bg-white shadow-md rounded-full font-bold text-lg hover">
+          Create an account
+        </button>
       </div>
 
     </form>
-
-
-
 
   </section>
 </section>

@@ -1,113 +1,99 @@
-<section class="section-main">
+<section class="bg-gray-100 w-full max-h-[85vh] p-2  border-2 border-black rounded-2xl overflow-y-auto">
   <form (ngSubmit)="saveTask()" novalidate>
-    <section class="section-top">
-      <p>Criação de Nova Tarefa</p>
-      <button type="button" class = "button-close" (click)="closeAddTask()">
-        <img ngSrc = "/icon-close.png" width="30" height="30" alt="buttom-close" class = "img-close">
+    <section class="relative flex items-center justify-center">
+      <p class="mt-1 text-lg italic">Criação de Nova Tarefa</p>
+      <button type="button" class="absolute right-0 top-0" (click)="closeAddTask()">
+        <img src="/icon-close.png" width="30" height="30" alt="button-close" class="cursor-pointer rounded-xl">
       </button>
     </section>
 
-    <section class="section-text">
-      <p>* Título:</p>
-      <textarea [(ngModel)]="data.title" name="title" id="textarea-title" class="textarea-title" required></textarea>
+    <section class="mt-2">
+      <p class="text-lg font-bold">* Título:</p>
+      <textarea [(ngModel)]="data.title" name="title" id="textarea-title" class="w-full rounded-md border p-1 text-lg shadow-md resize-none" required></textarea>
 
-      <p>* Descrição:</p>
-      <textarea [(ngModel)]="data.description" name="description" id="textarea-description" class="textarea-description" required></textarea>
+      <p class="text-lg font-bold mt-2">* Descrição:</p>
+      <textarea [(ngModel)]="data.description" name="description" id="textarea-description" class="w-full h-32 rounded-md border p-1 text-lg shadow-md resize-none" required></textarea>
     </section>
 
-    <section class="section-emergency">
-      <button type="button" class="div-buttom-alternative" (click)="toggleEmergency()">
-        <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="toggle.isVerifEmergency">
+    <section class="mt-2 flex items-center">
+      <button type="button" class="w-8 h-8 bg-white rounded-full border shadow-md" (click)="toggleEmergency()">
+        <img src="./icon-verif-button.png" width="32" height="32" *ngIf="toggle.isVerifEmergency">
       </button>
-      <p> É uma Tarefa Emergencial?</p>
+      <p class="ml-2 text-lg font-bold">É uma Tarefa Emergencial?</p>
     </section>
 
-    <section class="section-period">
-      <div class="button-alternative-period">
-        <button type="button" (click)="toggleDivGapVisibility()" class="div-buttom-alternative">
+    <section class="mt-4">
+      <div class="flex items-center">
+        <button type="button" class="w-8 h-8 bg-white rounded-full border shadow-md" (click)="toggleDivGapVisibility()">
           <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="toggle.isVerificadoPeriod">
         </button>
-        <p> É uma Tarefa Periódica?</p>
+        <p class="ml-2 text-lg font-bold">É uma Tarefa Periódica?</p>
       </div>
 
-      <div class="div-gap" *ngIf="toggle.isDivGapVisible">
-        <p>* Intervalo de tempo em que se repete:</p>
+      <div class="mt-2" *ngIf="toggle.isDivGapVisible">
+        <p class="text-lg font-bold">* Intervalo de tempo em que se repete:</p>
 
-        <div class="div-group-gap-alternative">
-          <div class="div-gap-alternative" id="alternative-daily">
-            <p>Diariamente</p>
-            <button type="button" class="div-buttom-alternative" (click)="toggleSectionDailyDayVisibility()">
+        <div class="mt-2 flex justify-center gap-4">
+          <div class="flex flex-col items-center">
+            <p class="italic text-base">Diariamente</p>
+            <button type="button" class="w-8 h-8 bg-white rounded-full border shadow-md" (click)="toggleSectionDailyDayVisibility()">
               <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="toggle.isVerificadoDaily">
             </button>
           </div>
 
-          <div class="div-gap-alternative" id="alternative-weekly">
-            <p>Semanalmente</p>
-            <button type="button" class="div-buttom-alternative" (click)="toggleSectionWeekDayVisibility()">
+          <div class="flex flex-col items-center">
+            <p class="italic text-base">Semanalmente</p>
+            <button type="button" class="w-8 h-8 bg-white rounded-full border shadow-md" (click)="toggleSectionWeekDayVisibility()">
               <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="toggle.isVerificadoWeek">
             </button>
           </div>
 
-          <div class="div-gap-alternative" id="alternative-custom">
-            <p>Personalizado</p>
-            <button type="button" class="div-buttom-alternative" (click)="toggleSectionPersonDayVisibility()">
+          <div class="flex flex-col items-center">
+            <p class="italic text-base">Personalizado</p>
+            <button type="button" class="w-8 h-8 bg-white rounded-full border shadow-md" (click)="toggleSectionPersonDayVisibility()">
               <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="toggle.isVerificadoCustom">
             </button>
           </div>
         </div>
 
-        <div class="div-gap-custom" *ngIf="toggle.isSectionPersonDayVisible">
-          <p>* Intervalo personalizado:</p>
-          <select [(ngModel)]="data.interval" name="select-gap-custom" class="select-size" required>
+        <div class="mt-2 flex items-center" *ngIf="toggle.isSectionPersonDayVisible">
+          <p class="text-lg font-bold">* Intervalo personalizado:</p>
+          <select [(ngModel)]="data.interval" name="select-gap-custom" class="ml-2 w-24 h-9 text-lg rounded-md bg-white shadow-md" required>
             <option value="30">Mensal</option>
             <option value="91">Trimestral</option>
             <option value="182">Semestral</option>
             <option value="365">Anual</option>
-            <option *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21] " [ngValue]=i>
+            <option *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]" [ngValue]=i>
               {{i}} dia{{i > 1 ? 's' : ''}}
             </option>
           </select>
         </div>
-
-        <section class="section-weekday" *ngIf="toggle.isSectionWeekDayVisible">
-          <p>* Em qual dia da semana?</p>
-          <select [(ngModel)]="data.date" name="select-weekday" class="select-size" required>
-            <option value="1">Segunda-feira</option>
-            <option value="2">Terça-feira</option>
-            <option value="3">Quarta-feira</option>
-            <option value="4">Quinta-feira</option>
-            <option value="5">Sexta-feira</option>
-            <option value="6">Sábado</option>
-            <option value="0">Domingo</option>
-          </select>
-        </section>
       </div>
     </section>
 
-    <section class="section-date" *ngIf="toggle.isSectionDateVisible">
-      <p>* Data prevista:</p>
-      <input [(ngModel)]="data.date" type="date" name="date" id="input-date" class="input-date">
+    <section class="mt-2 flex items-center">
+      <p class="text-lg font-bold">* Data prevista:</p>
+      <input [(ngModel)]="data.date" type="date" name="date" id="input-date" class="ml-2 w-36 h-9 text-lg rounded-md bg-white shadow-md">
     </section>
 
-    <section class="section-hour">
-      <p>* Em qual hora do dia:</p>
-      <input [(ngModel)]="data.hour" type="time" name="time" id="input-time" class="input-time" required>
+    <section class="mt-2 flex items-center">
+      <p class="text-lg font-bold">* Em qual hora do dia:</p>
+      <input [(ngModel)]="data.hour" type="time" name="time" id="input-time" class="ml-2 w-32 h-9 text-lg rounded-md bg-white shadow-md" required>
     </section>
 
-    <section class="section-sub">
-      <div class="div-verifSub">
-        <button type="button" class="div-buttom-alternative" (click)="toggleSectionSubVisibility()">
+    <section class="mt-4 flex flex-col items-center">
+      <div class="flex items-center">
+        <button type="button" class="w-8 h-8 bg-white rounded-full border shadow-md" (click)="toggleSectionSubVisibility()">
           <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="toggle.isVerifSub">
         </button>
-        <p> Deseja ter sub tarefas?</p>
+        <p class="ml-2 text-lg font-bold">Deseja ter sub tarefas?</p>
       </div>
-
       <app-sub-task-create-list *ngIf="toggle.isVerifSub" (SavedTask)="handleSavedTask($event)" [subTasks]="subTasks"/>
     </section>
 
-    <section class="section-buttom-save-discard">
-      <button class="button-save" type="submit" [disabled]="!isFormValid()">Salvar</button>
-      <button type="reset" class="button-discard" >Descartar</button>
+    <section class="mt-4 flex justify-center">
+      <button class="w-32 h-12 text-lg font-bold bg-white border shadow-md rounded-l-full" type="submit" [disabled]="!isFormValid()">Salvar</button>
+      <button type="reset" class="w-32 h-12 text-lg font-bold bg-white border shadow-md rounded-r-full">Descartar</button>
     </section>
   </form>
 </section>

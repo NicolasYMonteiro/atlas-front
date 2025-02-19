@@ -8,7 +8,6 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { UserService } from '../../../Services/userService/user.service';
-import { User } from '../../../Models/user.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +15,6 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
 })
 
 
@@ -43,6 +41,8 @@ export class RegisterComponent {
   }
 
   postButton() {
+    console.log("dados: ", this.registerForm.value);
+  
     if (this.registerForm.invalid) {
       if (this.registerForm.get('email')?.errors?.['email']) {
         this.message = this.messageInvalidEmail;
@@ -51,14 +51,18 @@ export class RegisterComponent {
       }
       return;
     }
-
-    const { password, passwordRepete } = this.registerForm.value;
+  
+    const formValues = this.registerForm.value; // Obtém os valores do formulário
+    const { password, passwordRepete, ...rest } = formValues; // Remove passwordRepete
+  
     if (password !== passwordRepete) {
       this.message = this.messagePasswordMismatch;
       return;
     }
-
-    this.userService.postUser(this.registerForm.value).subscribe(
+  
+    const userToSend = { ...rest, password }; // Garante que passwordRepete não seja enviado
+  
+    this.userService.postUser(userToSend).subscribe(
       (response) => {
         const token = response.token;
         localStorage.setItem('authToken', token);
@@ -67,8 +71,8 @@ export class RegisterComponent {
       (error) => {
         console.log('Erro ao registrar usuário:', error);
         this.message = this.messageError;
-        
       }
     );
   }
+  
 }

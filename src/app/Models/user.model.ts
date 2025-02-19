@@ -1,4 +1,4 @@
-import { userInfo } from "node:os"
+import { TaskClassico } from "./task.model"
 
 export interface User{
     id?: number,
@@ -6,4 +6,5 @@ export interface User{
     user: string,
     email: string,
     password: string
+    tasks:    TaskClassico[],
 }

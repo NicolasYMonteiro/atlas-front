@@ -1,22 +1,21 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
-import { CommonModule, NgOptimizedImage  } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { format } from 'date-fns';
 import { FormateSectionsService } from '../../../Services/TaskFormateSections/formate-sections.service';
 import { TaskService } from '../../../Services/TaskService/task.service';
-import {SubTaskService} from '../../../Services/SubTaskService/sub-task.service'
+import { SubTaskService } from '../../../Services/SubTaskService/sub-task.service'
 import { TaskClassico } from '../../../Models/task.model';
 import { ToggleClass } from './toggleClass';
 
-import {SubTaskCreateListComponent} from '../sub-task-create-list/sub-task-create-list.component'
+import { SubTaskCreateListComponent } from '../sub-task-create-list/sub-task-create-list.component'
 
 @Component({
   selector: 'add-task-page',
   standalone: true,
   imports: [CommonModule, NgxMaterialTimepickerModule, FormsModule, NgOptimizedImage, SubTaskCreateListComponent],
   templateUrl: './add-task-page.component.html',
-  styleUrls: ['./add-task-page.component.scss']
 })
 export class AddTaskPageComponent {
 
@@ -43,7 +42,7 @@ export class AddTaskPageComponent {
     '', // description
     false, // emergency
     false, // periodical
-    format(new Date(), 'yyyy-MM-dd'), // date
+    new Date().toISOString(), // date
     0, // interval
     '', // hour
     false, // multiple
@@ -51,29 +50,35 @@ export class AddTaskPageComponent {
   );
 
   saveTask() {
-    if (this.isFormValid()) { // verifica validade do Form
-      this.taskService.postTask(this.data).subscribe({
-        next: (res) => { 
-          this.data.id = res.id
-          console.log("id: ", this.data.id)
-          this.handleSavedTask(this.subTasks);
+    console.log("Enviando dados:", this.data);
+    if (this.isFormValid()) {
+      this.data.interval = Number(this.data.interval);
+      this.data.date = new Date(this.data.date).toISOString();
+      this.data.dateCreator = new Date().toISOString();
+      const { id, ...requestData } = this.data;
 
+      console.log("Enviando dados formatados:", requestData);
+
+      this.taskService.postTask(requestData).subscribe({
+        next: (res) => {
+          this.handleSavedTask(this.subTasks);
           this.closeAddTask();
           window.location.reload();
-
-         },
-        error: (err) => {console.error('Erro ao adicionar a tarefa:', err);}
+        },
+        error: (err) => {
+          console.error('Erro ao adicionar a tarefa:', err);
+        }
       });
     }
   }
 
   handleSavedTask(subTasks: string[]) {
-    if(subTasks.length > 0){
+    if (subTasks.length > 0) {
       this.subtTaskService.postSubTask(this.data.id, subTasks).subscribe({
-        next: () => { 
+        next: () => {
           console.log("tudo certo, paizão")
-         },
-        error: (err) => {console.error('Erro ao adicionar a sub tarefa:', err);}
+        },
+        error: (err) => { console.error('Erro ao adicionar a sub tarefa:', err); }
       });
     }
 

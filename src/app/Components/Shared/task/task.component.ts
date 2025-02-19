@@ -8,7 +8,6 @@ import {TaskClassico} from '../../../Models/task.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss'] // Corrigindo o nome do campo para 'styleUrls'
 })
 export class TaskComponent {
   @Input() data!: TaskClassico;

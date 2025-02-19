@@ -6,13 +6,13 @@ import { TaskClassico } from '../../../Models/task.model';
 import { TaskService } from '../../../Services/TaskService/task.service';
 import { SubTask } from '../../../Models/subtTask.model';
 import { SubTaskService } from '../../../Services/SubTaskService/sub-task.service';
+import { format, parse } from 'date-fns';
 
 @Component({
   selector: 'check-task',
   standalone: true,
   imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule],
   templateUrl: './check-task.component.html',
-  styleUrl: './check-task.component.scss'
 })
 export class CheckTaskComponent {
   @Input() data!: TaskClassico;
@@ -27,13 +27,35 @@ export class CheckTaskComponent {
   isVerificadoText: boolean = false;
   isVerificadoAudio: boolean = false;
   isVerificadoVideo: boolean = false;
+  
+  intervalShow = '';
+  formattedDate!: string;
 
-  vetorSubTask: SubTask[] = [];
+  vetorSubTask: SubTask[] = []; 
 
   dateObj!: { date: string };
 
   ngOnInit(): void {
-    this.getSubTask()
+    console.log("CHECK Tarefa: ", this.data);
+
+    if (this.data.multipleTask) {
+      this.vetorSubTask = this.data.multipleTask;
+      console.log("Subtarefas carregadas:", this.vetorSubTask);
+    } else {
+      console.warn("Nenhuma subtask encontrada no objeto de tarefa.");
+    }
+
+    if (this.data.interval === 1) {
+      this.intervalShow = `${this.data.interval} dia`
+    } else {
+      this.intervalShow = `${this.data.interval} dias`
+    }
+
+    // Converte a string "14-08-2024" em um objeto Date usando date-fns
+    const parsedDate = parse(this.data.date, 'yyyy-MM-dd', new Date());
+
+    // Formata a data para o formato que o input date aceita: yyyy-MM-dd
+    this.formattedDate = format(parsedDate, 'yyyy-MM-dd');
   }
 
   finalizarTask() {
@@ -51,30 +73,6 @@ export class CheckTaskComponent {
         error: (err) => { console.error('Erro ao deletar a tarefa:', err); }
       });
     }
-  }
-
-  getSubTask() {
-    this.subTaskService.getByTask(this.data.id).subscribe({
-      next: (subTasks: SubTask[]) => {
-        if (Array.isArray(subTasks)) {
-
-          this.vetorSubTask = subTasks.flat()
-            .filter(subTask => subTask && subTask.title)  // Filtra objetos com 'title' definido
-            .map(subTask =>
-              new SubTask(subTask.id, subTask.title, subTask.verif)
-            );
-
-        } else {
-          console.error("Formato inesperado dos dados retornados: ", subTasks);
-        }
-      },
-      error: (err) => console.error("Erro ao obter subtarefas:", err)
-    });
-  }
-
-  verifSubTask(tarefa: SubTask) {
-    tarefa.verif = !tarefa.verif;  // Alterna o valor
-
   }
 
   salvarProgresso() {
@@ -98,6 +96,11 @@ export class CheckTaskComponent {
       }
     });
     this.closeCheckTask();
+  }
+
+  verifSubTask(tarefa: SubTask) {
+    tarefa.verif = !tarefa.verif;  // Alterna o valor
+
   }
 
   closeCheckTask() {

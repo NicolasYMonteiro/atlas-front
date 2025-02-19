@@ -15,7 +15,6 @@ import { UserService } from '../../../Services/userService/user.service';
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './tela-login.component.html',
-  styleUrl: './tela-login.component.scss',
 })
 
 
@@ -31,30 +30,27 @@ export class TelaLoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      senha: ['', Validators.required],
       rememberMe: [false],
     });
   }
 
   postButton() {
+    console.log("dados enviados: ", this.loginForm.value);
     if (this.loginForm.invalid) {
-      this.message = this.messageInvalidCredentials;
+      this.message = "Preencha todos os campos corretamente!";
       return;
     }
     this.message = '';
 
-    this.userService.postLogin(this.loginForm.value).subscribe(
-      (response) => {
-        const token = response.token;
-        localStorage.setItem('authToken', token);
-
-        this.loginForm.reset();
-        this.router.navigate(['/home']);
+    this.userService.postLogin(this.loginForm.value).subscribe({
+      next: (response) => {
+        localStorage.setItem('authToken', response.token); // Salvar token no localStorage
       },
-      (error) => {
-        this.message = this.messageInvalidCredentials;
-        console.error('Erro ao logar:', error);
+      error: (error) => {
+        this.message = "Email ou senha incorretos!";
       }
-    );
+    });
+
   }
 }

@@ -3,7 +3,6 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { TopBarComponent } from '../Components/Secondary/top-bar/top-bar.component';
 import { SideBarComponent } from '../Components/Secondary/side-bar/side-bar.component';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../environments/environment';
 import { User } from '../Models/user.model';
 import { UserService } from '../Services/userService/user.service';
 import { catchError, map, Observable, of } from 'rxjs';
@@ -17,8 +16,6 @@ import { catchError, map, Observable, of } from 'rxjs';
 })
 export class AppComponent implements OnInit{
   title = 'FrontEnd-Angular';
-
-  //users: User[] = [];
   users$ = new Observable<User[]>();
 
   constructor(private userService: UserService, private router: Router){}
@@ -34,12 +31,13 @@ export class AppComponent implements OnInit{
   checkAuthentication() {
     this.userService.getUserData().pipe(
       map(data => {
+        const currentUrl = this.router.url;
         if (!data || data.length === 0) {
-          const currentUrl = this.router.url;
           if (currentUrl !== '/login' && currentUrl !== '/register') {
             this.router.navigate(['/login']);
           }
         }
+        return data; 
       }),
       catchError(error => {
         const currentUrl = this.router.url;
@@ -48,10 +46,9 @@ export class AppComponent implements OnInit{
         }
         return of(null);
       })
-    ).subscribe();
+    ).subscribe(); // Certifique-se de sempre ter uma subscrição
   }
-
-
+  
 
   isSideBarVisible: boolean = false;
 

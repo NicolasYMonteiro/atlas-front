@@ -1,0 +1,10 @@
+<section class="pt-5 px-2">
+    <section class="flex items-center mb-2">
+        <img ngSrc="/user.png" alt="user-img" width="80" height="80" class="rounded-full">
+        <div class="flex flex-col justify-center gap-1 ml-4" *ngIf="userData">
+            <p class="text-lg font-semibold">{{ userData.name }}</p>
+            <p class="text-lg text-gray-600">{{ userData.email }}</p>
+        </div>
+    </section>
+    <hr class="border-gray-300">
+</section>

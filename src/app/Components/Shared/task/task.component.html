@@ -1,20 +1,21 @@
-<section class="section-main">
-  <section class="section-verif">
-    <button class="div-verif" (click) = "openCheckTask()"></button>
+<section class="w-full h-full p-2 border border-black rounded-2xl flex bg-gray-200 shadow-lg hover:border-2">
+  <!-- Verificação -->
+  <section class="bg-gray-200 rounded-l-2xl flex items-center">
+    <button 
+      class="w-[35px] h-[32px] bg-white border border-black rounded-md mr-2 cursor-pointer transition-all duration-100 hover:border-2" 
+      (click)="openCheckTask()">
+    </button>
   </section>
 
-  <button class = "button-open-description" (click) = "openDisplayTask()" >
+  <!-- Botão de abrir descrição -->
+  <button class="flex-1 ml-[5px] whitespace-nowrap overflow-hidden cursor-pointer pb-1" (click)="openDisplayTask()">
+    <section class="flex h-[70%] items-center text-left pr-1">
+      <p *ngIf="data" class="text-lg text-gray-900 truncate">{{ data.title }}</p>
+    </section>
 
-
-      <section class="section-description">
-        <p *ngIf="data">{{ data.title }} </p>
-      </section>
-
-      <section class="section-data">
-        <p *ngIf="data" class = "p-hora">{{ data.hour }},</p>
-        <p *ngIf="data">{{ data.date }}</p>
-      </section>
-
+    <section class="flex justify-between">
+      <p *ngIf="data" class="font-bold">{{ data.hour }}</p>
+      <p *ngIf="data" class="text-lg italic text-gray-800">{{ data.date }}</p>
+    </section>
   </button>
-
 </section>

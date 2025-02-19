@@ -6,7 +6,6 @@ import { NgOptimizedImage } from '@angular/common';
   standalone: true,
   imports: [NgOptimizedImage],
   templateUrl: './add-buttom.component.html',
-  styleUrl: './add-buttom.component.scss'
 })
 export class AddButtomComponent {
 

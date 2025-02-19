@@ -1,45 +1,50 @@
-<section class="section-container">
-    <section class="section-main">
-  
-      <div class="div-title"><h1>LOGIN</h1></div>
-  
-      <form [formGroup]="loginForm" (ngSubmit)="postButton()" class="forms">
-        <div class="div-email">
-          <p>Email:</p>
-          <textarea formControlName="email" placeholder="Enter your email address..."></textarea>
-        </div>
-  
-        <div class="div-password">
-          <p>Enter a password:</p>
-          <textarea formControlName="password" placeholder="Enter your password..."></textarea>
-        </div>        
-        <div class="div-forgot">
-          <a href="/forgot-password">Forgot your password?</a>
-        </div>     
+<section class="flex items-center justify-center w-full h-full mt-px">
+  <section class="flex flex-col p-8 border border-gray-300 bg-white shadow-lg rounded-2xl">
 
-        <div class="div-message">
-            <p *ngIf="message" class="error-message">{{ message }}</p>
-        </div>  
-  
-        <div class="div-options">
-          <div class="div-remember">
-            <input type="checkbox" formControlName="rememberMe" class="checkbox-remember">
-            <p>Remember me</p>
-          </div>
-  
+    <div class="text-center text-3xl font-bold mb-12">
+      <h1>LOGIN</h1>
+    </div>
 
-        </div>      
-        
+    <form [formGroup]="loginForm" (ngSubmit)="postButton()" class="flex flex-col">
 
-  
-        <div class="div-button">
-          <button type="submit" class="button-login">Login</button>
-        </div>
-      </form>
+      <div class="mb-6">
+        <p class="text-lg font-medium">Email:</p>
+        <input type="email" formControlName="email" placeholder="Enter your email address..."
+          class="w-72 h-7 mt-2 border-b-2 border-gray-400 outline-none text-lg" />
+      </div>
+      
+      <div class="mb-4">
+        <p class="text-lg font-medium">Enter a password:</p>
+        <input type="password" formControlName="senha" placeholder="Enter your password..."
+          class="w-72 h-7 mt-2 border-b-2 border-gray-400 outline-none text-lg" />
+      </div>      
 
-      <div class="div-register">
-        <a href="/register">Novo por aqui? Crie um conta aqui.</a>
+      <div class="text-right mb-4">
+        <a href="/forgot-password" class="text-sm text-blue-500 hover:underline">Forgot your password?</a>
       </div>
 
-    </section>
+      <div class="text-center mt-2">
+        <p *ngIf="message" class="text-red-500 text-base">{{ message }}</p>
+      </div>
+
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center">
+          <input type="checkbox" formControlName="rememberMe" class="w-4 h-4 mr-2">
+          <p class="text-base">Remember me</p>
+        </div>
+      </div>
+
+      <div class="flex justify-center mb-4">
+        <button type="submit"
+          class="w-32 h-12 border border-gray-300 bg-white shadow-md rounded-full font-bold text-lg hover:bg-gray-100">
+          Login
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-4 text-center">
+      <a href="/register" class="text-blue-500 hover:underline">Novo por aqui? Crie uma conta aqui.</a>
+    </div>
+
   </section>
+</section>

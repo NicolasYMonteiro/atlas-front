@@ -1,70 +1,59 @@
-<section class="section-main">
-  <section class="section-top">
-
-    <p>Edição de Tarefa</p>
-
-    <button class="button-close" (click)="closeEditTask()">
-      <img ngSrc="/icon-close.png" width="30" height="30" alt="buttom-close" class="img-close">
+<section class="bg-gray-100 w-full max-h-[85vh] p-2 border-2 border-black rounded-2xl flex flex-col">
+  <section class="border-b border-black flex items-center justify-center relative py-2">
+    <p class="text-lg italic">Edição de Tarefa</p>
+    <button class="absolute right-0 top-0 bg-primary rounded-full p-1" (click)="closeEditTask()">
+      <img ngSrc="/icon-close.png" width="30" height="30" alt="buttom-close" class="cursor-pointer rounded-full">
     </button>
-
-
   </section>
 
-  <section class="section-body">
-    <section class="section-text"> <!-- Título de Descrição -->
-      <p>* Título da tarefa:</p>
-      <textarea [(ngModel)]="data.title" name="title" id="textarea-title" class="textarea-title"></textarea>
-
-      <p *ngIf="data.description">* Descrição:</p>
-      <textarea *ngIf="data.description" [(ngModel)]="data.description" name="description" id="textarea-description"
-        class="textarea-description"></textarea>
+  <section class="mt-2 overflow-y-auto pr-2">
+    <section class="mt-4">
+      <p class="text-lg font-bold">* Título da tarefa:</p>
+      <textarea [(ngModel)]="data.title" name="title" class="w-full rounded-md border p-1 text-lg shadow-md"></textarea>
+      <p *ngIf="data.description" class="text-lg font-bold mt-2">* Descrição:</p>
+      <textarea *ngIf="data.description" [(ngModel)]="data.description" name="description" class="w-full h-36 rounded-md border p-1 text-lg shadow-md"></textarea>
     </section>
 
-
-    <section class="section-date"> <!-- Data -->
-      <p>* Data prevista: </p>
-      <input [(ngModel)]="formattedDate" type="date" name="date" id="input-date" class="input-date">
+    <section class="mt-4 flex items-center">
+      <p class="text-lg font-bold">* Data prevista:</p>
+      <input [(ngModel)]="formattedDate" type="date" name="date" class="ml-2 w-40 h-9 rounded-md text-lg text-center bg-white shadow-md">
     </section>
 
-    <section class="section-intervalo" *ngIf="data.periodical === true"> <!-- Intervalo -->
-      <p>* Período de intervalo: </p>
-      <select [(ngModel)]="data.interval" name="select-gap-custom" class="select-size" required>
+    <section *ngIf="data.periodical === true" class="mt-4 flex items-center">
+      <p class="text-lg font-bold">* Período de intervalo:</p>
+      <select [(ngModel)]="data.interval" name="select-gap-custom" class="ml-2 w-24 h-9 rounded-md bg-white shadow-md text-lg" required>
         <option value="30">Mensal</option>
         <option value="91">Trimestral</option>
         <option value="182">Semestral</option>
         <option value="365">Anual</option>
-        <option *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21] "
-          [ngValue]=i>
+        <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]" [ngValue]="i">
           {{i}} dia{{i > 1 ? 's' : ''}}
         </option>
       </select>
-
     </section>
 
-    <section class="section-hour"> <!-- Hora -->
-      <p>* Horário programado:</p>
-      <input [(ngModel)]="data.hour" type="time" name="time" id="input-time" class="input-time">
-      <!-- Ver um jeito melhor de visualizar horas, minutos e segundos-->
-
+    <section class="mt-4 flex items-center">
+      <p class="text-lg font-bold">* Horário programado:</p>
+      <input [(ngModel)]="data.hour" type="time" name="time" class="ml-2 w-32 h-9 rounded-md text-lg text-center bg-white shadow-md">
     </section>
 
-    <section class="section-sub">
-      <div class="div-verifSub">
-
+    <section class="mt-4 flex flex-col w-full">
+      <div class="flex flex-row items-center justify-start">
+        <p class="ml-2 text-lg font-bold">Subtarefas</p>
       </div>
-
-      <app-sub-task-create-list (SavedTask)="handleSavedTask($event)" [subTasks]="subTasks" />
+      <div *ngFor="let task of subTasks; let i = index; trackBy: trackByIndex " class="flex gap-2 items-center mt-2">
+        <textarea [(ngModel)]="subTasks[i].title" class="w-full rounded-md border p-1 text-lg shadow-md" placeholder="Escreva aqui sua sub tarefa"></textarea>
+        <button type="button" (click)="removeSubTask(i)" class="px-4 py-2 bg-red-500 text-white rounded-md">Excluir</button>
+      </div>
+      <button type="button" (click)="addSubTask()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">Adicionar Subtarefa</button>
     </section>
 
-    <section class="section-buttom-save-discard">
-      <button class="button-edit" (click)="saveTask()"> Salvar </button>
+    <section class="mt-4 flex justify-center">
+      <button class="w-32 h-12 border text-lg font-bold bg-white shadow-md rounded-full" (click)="saveTask()">Salvar</button>
     </section>
-
-
   </section>
 
-  <div class="div-dataCreator">
+  <div class="text-right mt-2">
     <p>Data de criação: {{data.dateCreator}}</p>
   </div>
-
 </section>

@@ -13,6 +13,8 @@ import { FormateSectionsService } from '../../../Services/TaskFormateSections/fo
 import { TaskService } from '../../../Services/TaskService/task.service';
 import { TaskClassico } from '../../../Models/task.model';
 import { EditTaskPageComponent } from '../../Shared/edit-task-page/edit-task-page.component';
+import { UserService } from '../../../Services/userService/user.service';
+import { format, parseISO } from 'date-fns';
 
 
 export interface Section {
@@ -25,16 +27,19 @@ export interface Section {
   selector: 'all-list-page',
   standalone: true,
   imports: [CommonModule, TopBarComponent, TaskComponent, AddButtomComponent, AddTaskPageComponent, DisplayTaskPageComponent, CheckTaskComponent, EditTaskPageComponent],
-  templateUrl: './all-list-page.component.html',
-  styleUrls: ['./all-list-page.component.scss']
+  templateUrl: './all-list-page.component.html'
 })
 
 export class AllListPageComponent implements OnInit {
 
-  constructor(private formateSectionsService: FormateSectionsService,
-    private taskService: TaskService) {
+  constructor(
+    private formateSectionsService: FormateSectionsService,
+    private taskService: TaskService
+  ) { }
 
-  }
+  userData = {
+    tasks: [] as TaskClassico[]
+  };
 
   calculateSections() { // importação do services para formatação das sections
     this.sections = this.formateSectionsService.calculateSections(this.tasks);
@@ -45,21 +50,29 @@ export class AllListPageComponent implements OnInit {
   tasks: TaskClassico[] = [];
 
   ngOnInit(): void {
-    this.taskService.getTaskData().subscribe((taskData: any) => {
-      this.tasks = (taskData || []).map((task: any) => new TaskClassico(
-        task.id,
-        task.title,
-        task.description,
-        task.emergency,
-        task.periodical,
-        task.date,
-        task.interval,
-        task.hour,
-        task.multiple,
-        task.dateCreator
-      ));
+    console.log("tasks: ", this.userData)
 
+    this.taskService.getTaskData().subscribe((data: any) => {
+      if (data) {
+        console.log("DATA task: ", data)
+        const tasksArray = Array.isArray(data) ? data : [data];
+        this.tasks = tasksArray.map(task => new TaskClassico(
+          task.id,
+          task.title,
+          task.description,
+          task.emergency,
+          task.periodical,
+          task.date ? format(parseISO(task.date), 'yyyy-MM-dd') : '',
+          task.interval,
+          task.hour,
+          task.multiple,
+          task.dateCreator ? format(parseISO(task.dateCreator), 'dd-MM-yyyy') : '',
+          task.multipleTask || []  // Passando multipleTask corretamente
+
+        ));
+      }
       this.calculateSections(); // calculateSections após atualizar tasks
+
     });
   }
 

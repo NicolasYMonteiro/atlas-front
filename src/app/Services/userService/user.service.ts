@@ -44,7 +44,7 @@ export class UserService {
     return this.http.post<any>(this.urlUser, user);
   }
 
-  postLogin(credentials: { email: string; password: string }) {
+  postLogin(credentials: { email: string; senha: string }) {
     return this.http.post<any>(this.urlLogin, credentials);
   }
 }

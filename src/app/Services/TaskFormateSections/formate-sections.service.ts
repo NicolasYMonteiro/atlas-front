@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Section } from '../../Components/Routes/all-list-page/all-list-page.component';
+import { Section } from '../../Components/Routes/task-list/all-list-page.component';
 import { format, parse, isSameDay, addDays, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Task } from '../../Models/task.model';
@@ -66,14 +66,11 @@ export class FormateSectionsService {
   }
 
   private parseDate(dateString: string): Date {
-    let parsedDate = parse(dateString, 'dd/MM/yyyy', new Date());
-    if (isNaN(parsedDate.getTime())) {
-      parsedDate = parse(dateString, 'dd-MM-yyyy', new Date());
-    }
-    if (isNaN(parsedDate.getTime())) {
+    try {
+      return parseISO(dateString);
+    } catch (error) {
       console.error(`Invalid date: ${dateString}`);
       return new Date(0); // Retorna uma data inválida
     }
-    return parsedDate;
   }
 }

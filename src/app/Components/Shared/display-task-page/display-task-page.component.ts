@@ -3,7 +3,7 @@ import { Component, Output, Input, EventEmitter, OnChanges, SimpleChanges, OnIni
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { FormsModule } from '@angular/forms';
 import { format, parse } from 'date-fns';
-import { TaskClassico } from '../../Routes/all-list-page/all-list-page.component';
+import { TaskClassico } from '../../Routes/task-list/all-list-page.component';
 import { SubTask } from '../../../Models/subtTask.model';
 import { TaskService } from '../../../Services/TaskService/task.service';
 import { SubTaskService } from '../../../Services/SubTaskService/sub-task.service';
@@ -13,7 +13,6 @@ import { SubTaskService } from '../../../Services/SubTaskService/sub-task.servic
   standalone: true,
   imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule],
   templateUrl: './display-task-page.component.html',
-  styleUrls: ['./display-task-page.component.scss']
 })
 export class DisplayTaskPageComponent implements OnInit {
 
@@ -21,7 +20,7 @@ export class DisplayTaskPageComponent implements OnInit {
   @Output() closeDisplayTaskEvent = new EventEmitter<void>();
   @Output() editTaskEvent = new EventEmitter<any[]>();
 
-  constructor(private taskService: TaskService, private subTaskService: SubTaskService){}
+  constructor(private taskService: TaskService){}
 
   isSectionIntervaloVisible = false;
   isSectionDateVisible = false;
@@ -29,9 +28,18 @@ export class DisplayTaskPageComponent implements OnInit {
   intervalShow = '';
   formattedDate!: string;
 
-  vetorSubTask: SubTask[] = [];
+  vetorSubTask: SubTask[] = []; // Armazena as subtarefas
 
   ngOnInit(): void {
+    console.log("Display Tarefa: ", this.data);
+
+    if (this.data.multipleTask) {
+      this.vetorSubTask = this.data.multipleTask;
+      console.log("Subtarefas carregadas:", this.vetorSubTask);
+    } else {
+      console.warn("Nenhuma subtask encontrada no objeto de tarefa.");
+    }
+
     if (this.data.interval === 1) {
       this.intervalShow = `${this.data.interval} dia`
     } else {
@@ -39,36 +47,11 @@ export class DisplayTaskPageComponent implements OnInit {
     }
 
     // Converte a string "14-08-2024" em um objeto Date usando date-fns
-    const parsedDate = parse(this.data.date, 'dd-MM-yyyy', new Date());
+    const parsedDate = parse(this.data.date, 'yyyy-MM-dd', new Date());
 
     // Formata a data para o formato que o input date aceita: yyyy-MM-dd
     this.formattedDate = format(parsedDate, 'yyyy-MM-dd');
-
-    this.getSubTask();
-
   }
-
-  getSubTask() {
-    this.subTaskService.getByTask(this.data.id).subscribe({
-      next: (subTasks: any[]) => {
-        if (Array.isArray(subTasks)) {
-          console.log("subtask: ", subTasks);
-
-          const flattenedSubTasks = subTasks.flat();
-          this.vetorSubTask = flattenedSubTasks
-          .filter(subTask => subTask && subTask.title)  // Filtra objetos com 'title' definido
-          .map(subTask => subTask);
-          
-          console.log("Vetor de Subtarefas: ", this.vetorSubTask); // Agora deve mostrar os títulos corretamente
-        } else {
-          console.error("Formato inesperado dos dados retornados: ", subTasks);
-        }
-      },
-      error: (err) => console.error("Erro ao obter subtarefas:", err)
-    });
-  }
-  
-
 
   closeDisplayTask() {
     this.closeDisplayTaskEvent.emit();
