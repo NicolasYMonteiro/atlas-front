@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { format, parse, addDays } from 'date-fns';
 import { TaskClassico } from '../../Routes/task-list/all-list-page.component';
 import { TaskService } from '../../../Services/TaskService/task.service';
-import { SubTaskService } from '../../../Services/SubTaskService/sub-task.service';
 import { SubTaskCreateListComponent } from '../sub-task-create-list/sub-task-create-list.component';
 import { SubTask } from '../../../Models/subtTask.model';
 
@@ -24,7 +23,7 @@ export class EditTaskPageComponent implements OnInit {
   dataformat: { title?: string; description?: string; date?: string; interval?: number; hour?: string } = {};
   subTasks: SubTask[] = [];
 
-  constructor(private taskService: TaskService, private subTaskService: SubTaskService) { }
+  constructor(private taskService: TaskService) { }
 
   isSectionIntervaloVisible = false;
   isSectionDateVisible = false;
@@ -78,39 +77,37 @@ export class EditTaskPageComponent implements OnInit {
     this.closeEditTaskEvent.emit();
   }
 
-  handleSavedTask() {
-    if (this.subTasks.length > 0) {
-      const updatedSubTasks = this.subTasks.map(subTask => subTask.title);
-      this.subTaskService.postSubTask(this.data.id, updatedSubTasks).subscribe({
+  saveTask() {  
+    // Garante que a lista de subtarefas esteja sempre presente
+    const formattedSubTasks = this.subTasks.map(subTask => {
+      return subTask.id ? { id: subTask.id, title: subTask.title, verif: subTask.verif } : { title: subTask.title, verif: false };
+    });
+  
+    const payload = {
+      title: this.data.title,
+      description: this.data.description,
+      emergency: this.data.emergency || false,
+      periodical: this.data.periodical || false,
+      date: new Date(this.data.date).toISOString(),
+      interval: Number(this.data.interval), // Garante que é string, se a API esperar isso
+      hour: this.data.hour,
+      multiple: this.subTasks.length > 0, // Define se tem múltiplas tarefas
+      dateCreator: new Date().toISOString(),
+      multipleTask: formattedSubTasks // Sempre enviar como array
+    };
+  
+    console.log("Payload enviado:", payload);
+  
+    if (this.isFormValid()) {
+      this.taskService.patchTask(this.data.id, payload).subscribe({
         next: () => {
+          console.log("Tarefa atualizada com sucesso!");
+          this.closeEditTask();
           window.location.reload();
         },
         error: (err) => {
-          console.error('Erro ao adicionar/atualizar a sub tarefa:', err);
+          console.error("Erro ao atualizar a tarefa:", err);
         }
-      });
-    }
-  }
-
-  saveTask() {
-    const parsedDate = format(parse(this.formattedDate, 'yyyy-MM-dd', new Date()), 'yyyy-MM-dd');
-
-    this.dataformat = {
-      title: this.data.title,
-      description: this.data.description,
-      date: parsedDate,
-      interval: this.data.interval,
-      hour: this.data.hour
-    };
-
-    if (this.isFormValid()) {
-      if (this.data.periodical === true) {
-        this.dataformat.date = format(new Date(), 'yyyy-MM-dd');
-      }
-
-      this.taskService.patchTask(this.data.id, this.dataformat).subscribe({
-        next: () => { this.handleSavedTask(); },
-        error: (err) => { console.error('Erro ao atualizar a tarefa:', err); }
       });
     }
   }

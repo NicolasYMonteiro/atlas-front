@@ -1,22 +1,38 @@
-<section class="w-full p-4">
-  <section *ngIf="isAddTaskVisible" class="fixed inset-0 flex justify-center items-center z-50">
-    <add-task-page class="w-4/5 max-w-3xl rounded-lg shadow-lg" (closeAddTaskEvent)="toggleAddTask()" (saveTaskEvent)="onTaskSaved($event)"></add-task-page>
+<section class="w-full p-4 relative">
+  <!-- Containers das Modais -->
+  <section *ngIf="isAddTaskVisible" class="absolute top-0 left-0 w-full pt-8 flex justify-center items-center z-50">
+    <add-task-page class="w-4/5 max-w-3xl rounded-lg shadow-lg" 
+      (closeAddTaskEvent)="toggleAddTask()" 
+      (saveTaskEvent)="onTaskSaved($event)">
+    </add-task-page>
   </section>
 
-  <section *ngIf="isDisplayTaskVisible" class="fixed inset-0 flex justify-center items-center z-50">
-    <display-task class="w-4/5 max-w-3xl rounded-lg shadow-lg" (closeDisplayTaskEvent)="toggleDisplayTask()" 
-    (editTaskEvent)="toggleEditTask()" [data]="infoTask"></display-task>
+  <section *ngIf="isDisplayTaskVisible" class="absolute top-0 left-0 w-full pt-8 flex justify-center items-center z-50">
+    <display-task class="w-4/5 max-w-3xl rounded-lg shadow-lg" 
+      (closeDisplayTaskEvent)="toggleDisplayTask()" 
+      (editTaskEvent)="toggleEditTask()" 
+      [data]="infoTask">
+    </display-task>
   </section>
 
-  <section *ngIf="isCheckTaskVisible" class="fixed inset-0 flex justify-center items-center z-50">
-    <check-task class="w-4/5 max-w-3xl rounded-lg shadow-lg" (closeCheckTaskEvent)="toggleCheckTask()" [data]="infoTask"></check-task>
+  <section *ngIf="isCheckTaskVisible" class="absolute top-0 left-0 w-full pt-8 flex justify-center items-center z-50">
+    <check-task class="w-4/5 max-w-3xl rounded-lg shadow-lg" 
+      (closeCheckTaskEvent)="toggleCheckTask()" 
+      [data]="infoTask">
+    </check-task>
   </section>
 
-  <section *ngIf="isEditTaskVisible" class="fixed inset-0 flex justify-center items-center z-50">
-    <edit-task class="w-4/5 max-w-3xl rounded-lg shadow-lg" (closeEditTaskEvent)="toggleEditTask()" [data]="infoTask"></edit-task>
+  <section *ngIf="isEditTaskVisible" class="absolute top-0 left-0 w-full pt-8 flex justify-center items-center z-50">
+    <edit-task class="w-4/5 max-w-3xl rounded-lg shadow-lg" 
+      (closeEditTaskEvent)="toggleEditTask()" 
+      [data]="infoTask">
+    </edit-task>
   </section>
 
-  <section [ngClass]="{'blur-sm': isAddTaskVisible || isDisplayTaskVisible || isCheckTaskVisible || isEditTaskVisible }" class="min-h-screen flex flex-col items-center pt-5">
+  <!-- Conteúdo Principal -->
+  <section [ngClass]="{'blur-sm': isAddTaskVisible || isDisplayTaskVisible || isCheckTaskVisible || isEditTaskVisible }" 
+    class="min-h-screen flex flex-col items-center pt-5">
+    
     <ng-container *ngFor="let section of sections">
       <section class="w-full max-w-4xl mb-5"
                [ngClass]="{'border-red-500': section.title.includes('Emergencial')}">
@@ -27,13 +43,15 @@
         <ng-container *ngFor="let task of section.tasks">
           <div class="w-full flex flex-col items-center gap-4">
             <task class="w-full my-2" [data]="task"
-                  (verifClicked)="openCheckTask($event)" (taskClicked)="openDisplayTask($event)">
+                  (verifClicked)="openCheckTask($event)" 
+                  (taskClicked)="openDisplayTask($event)">
             </task>
           </div>
         </ng-container>
       </section>
     </ng-container>
 
+    <!-- Botão de Adicionar Tarefa -->
     <section class="fixed bottom-5 right-5">
       <button class="text-white rounded-full shadow-lg" (click)="toggleAddTask()">
         <addButtom></addButtom>

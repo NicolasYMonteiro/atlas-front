@@ -6,7 +6,6 @@ import { format, parse } from 'date-fns';
 import { TaskClassico } from '../../Routes/task-list/all-list-page.component';
 import { SubTask } from '../../../Models/subtTask.model';
 import { TaskService } from '../../../Services/TaskService/task.service';
-import { SubTaskService } from '../../../Services/SubTaskService/sub-task.service';
 
 @Component({
   selector: 'display-task',

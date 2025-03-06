@@ -3,7 +3,6 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { format } from 'date-fns';
-import { FormateSectionsService } from '../../../Services/TaskFormateSections/formate-sections.service';
 import { TaskService } from '../../../Services/TaskService/task.service';
 import { SubTaskService } from '../../../Services/SubTaskService/sub-task.service'
 import { TaskClassico } from '../../../Models/task.model';

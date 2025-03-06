@@ -28,7 +28,7 @@ html, body {
 
 .section-sideBar {
   width: 30%; /* Largura da sidebar */
-  height: 100vh; /* Altura da viewport */
+  height: 100%; /* Altura da viewport */
   position: fixed; /* Fixa a sidebar */
   transform: translateX(-102%); /* Inicialmente fora da tela */
   transition: transform 0.3s ease; /* Transição suave */
@@ -39,13 +39,3 @@ html, body {
   transform: translateX(0); /* Desliza para dentro */
 }
 
-@media (min-width: 768px) {
-  .section-sideBar {
-    width: 20%;
-    transform: translateX(0%); /* Sempre visível e fixo */
-  }
-
-  .section-router {
-    padding-left: 20%; /* Ajusta o conteúdo principal para não sobrepor a sidebar */
-  }
-}

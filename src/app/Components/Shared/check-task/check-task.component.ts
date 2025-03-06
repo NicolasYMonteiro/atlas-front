@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { TaskClassico } from '../../../Models/task.model';
 import { TaskService } from '../../../Services/TaskService/task.service';
 import { SubTask } from '../../../Models/subtTask.model';
-import { SubTaskService } from '../../../Services/SubTaskService/sub-task.service';
 import { format, parse } from 'date-fns';
 
 @Component({
@@ -20,81 +19,89 @@ export class CheckTaskComponent {
   @Output() closeCheckTaskEvent = new EventEmitter<void>(); // Evento que fecha a section
   @Output() saveTaskEvent = new EventEmitter<any[]>(); // Evento que envia os dados alterados (AINDA NÂO ENVIA NADA)
 
-  constructor(private taskService: TaskService, private subTaskService: SubTaskService) { }
+  constructor(private taskService: TaskService) { }
+  dataformat: { title?: string; description?: string; date?: string; interval?: number; hour?: string } = {};
 
   verifInternalTasks: boolean[] = [];
   isVerificadoRecord: boolean = false;
   isVerificadoText: boolean = false;
   isVerificadoAudio: boolean = false;
   isVerificadoVideo: boolean = false;
-  
-  intervalShow = '';
-  formattedDate!: string;
 
-  vetorSubTask: SubTask[] = []; 
+  intervalShow = '';
+  vetorSubTask: SubTask[] = [];
 
   dateObj!: { date: string };
 
+  // Data convertida
+  formattedDate!: string;
+
   ngOnInit(): void {
-    console.log("CHECK Tarefa: ", this.data);
+    if (this.data) {
+      this.dataformat = {
+        title: this.data.title,
+        description: this.data.description,
+        date: this.data.date,
+        interval: this.data.interval,
+        hour: this.data.hour
+      };
 
-    if (this.data.multipleTask) {
-      this.vetorSubTask = this.data.multipleTask;
-      console.log("Subtarefas carregadas:", this.vetorSubTask);
-    } else {
-      console.warn("Nenhuma subtask encontrada no objeto de tarefa.");
+      this.vetorSubTask = this.data.multipleTask || [];
+      console.log("subtask: ", this.vetorSubTask)
+
+      // Converte a string "14-08-2024" em um objeto Date usando date-fns
+      const parsedDate = parse(this.data.date, 'yyyy-MM-dd', new Date());
+      // Formata a data para o formato que o input date aceita: yyyy-MM-dd
+      this.formattedDate = format(parsedDate, 'yyyy-MM-dd');
     }
-
-    if (this.data.interval === 1) {
-      this.intervalShow = `${this.data.interval} dia`
-    } else {
-      this.intervalShow = `${this.data.interval} dias`
-    }
-
-    // Converte a string "14-08-2024" em um objeto Date usando date-fns
-    const parsedDate = parse(this.data.date, 'yyyy-MM-dd', new Date());
-
-    // Formata a data para o formato que o input date aceita: yyyy-MM-dd
-    this.formattedDate = format(parsedDate, 'yyyy-MM-dd');
   }
 
   finalizarTask() {
-    if (this.data.periodical === true) {
-      this.data.changePeriodo(this.data.date, this.data.interval);
-      this.dateObj = { date: this.data.date }; // Preenche o objeto com a data
+    console.log("finalizar")
+    this.taskService.completTask(this.data.id).subscribe({
+      next: () => {
+        console.log("Tarefa concluida com sucesso!");
+        this.closeCheckTask();
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error("Erro ao concluir a tarefa:", err);
+      }
+    });
 
-      this.taskService.patchTask(this.data.id, this.dateObj).subscribe({
-        next: () => { window.location.reload() },
-        error: (err) => console.error('Erro ao atualizar a tarefa:', err)
-      });
-    } else {
-      this.taskService.delTask(this.data.id).subscribe({
-        next: () => { window.location.reload() },
-        error: (err) => { console.error('Erro ao deletar a tarefa:', err); }
-      });
-    }
+    this.closeCheckTask();
   }
 
   salvarProgresso() {
-    const updates = this.vetorSubTask.map(subTask => ({
-      id: subTask.id,
-      field: 'verif',
-      value: subTask.verif
-    }))
-    console.log("updates: ", updates)
+    // Garante que a lista de subtarefas esteja sempre presente
+    const formattedSubTasks = this.vetorSubTask.map(subTask => {
+      return subTask.id ? { id: subTask.id, title: subTask.title, verif: subTask.verif } : { title: subTask.title, verif: false };
+    });
 
-    this.subTaskService.patchTask(updates, this.data.id).subscribe({
-      next: (response) => {
-        if (response) {
-          console.log("Subtask updated successfully: ", response);
-        } else {
-          console.error("Failed to update subtask: Token not available.");
-        }
+    const payload = {
+      title: this.data.title,
+      description: this.data.description,
+      emergency: this.data.emergency || false,
+      periodical: this.data.periodical || false,
+      date: this.data.date,
+      interval: Number(this.data.interval), // Garante que é string, se a API esperar isso
+      hour: this.data.hour,
+      multiple: this.vetorSubTask.length > 0, // Define se tem múltiplas tarefas
+      dateCreator: new Date().toISOString(),
+      multipleTask: formattedSubTasks // Sempre enviar como array
+    };
+
+    console.log("Payload enviado:", payload);
+    this.taskService.patchTask(this.data.id, payload).subscribe({
+      next: () => {
+        console.log("Tarefa atualizada com sucesso!");
+        this.closeCheckTask();
       },
-      error: (error) => {
-        console.error("Error updating subtask: ", error);
+      error: (err) => {
+        console.error("Erro ao atualizar a tarefa:", err);
       }
     });
+
     this.closeCheckTask();
   }
 

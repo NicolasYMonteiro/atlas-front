@@ -3,7 +3,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Task } from '../../Models/task.model';
 import { map, of } from 'rxjs';
 
 @Injectable({
@@ -58,6 +57,26 @@ export class TaskService {
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `${token}`);
       return this.http.patch<any>(`${this.url}/${id}`, data, { headers })
+    } else {
+      return of(null);
+    }
+  }
+
+  completTask(id: number) {
+    const token = this.token();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `${token}`);
+      return this.http.post<any>(`${this.url}/complete/${id}`, { headers })
+    } else {
+      return of(null);
+    }
+  }
+
+  getCompletTask() {
+    const token = this.token();
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `${token}`);
+      return this.http.post<any>(`${this.url}/complete`, { headers })
     } else {
       return of(null);
     }

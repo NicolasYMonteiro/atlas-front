@@ -2,6 +2,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../Services/userService/user.service';
+import { TaskService } from '../../../Services/TaskService/task.service';
 
 
 @Component({
@@ -11,7 +12,11 @@ import { UserService } from '../../../Services/userService/user.service';
   templateUrl: './page-account.component.html'
 })
 export class PageAccountComponent implements OnInit {
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,     
+    private taskService: TaskService, 
+    private router: Router
+  ) { }
 
   userData = {
     name: '',
@@ -20,9 +25,9 @@ export class PageAccountComponent implements OnInit {
     tasks: []
   };
 
-  ngOnInit() {
-    console.log("data 2: ", this.userData)
-    
+  tasks [] = [] any;
+
+  ngOnInit() {    
     this.userService.getUserData().subscribe((data: any) => {
       if (data) {    
         const userData = Array.isArray(data) ? data[0] : data;
@@ -33,5 +38,9 @@ export class PageAccountComponent implements OnInit {
         this.userData.tasks = userData.tasks || [];
       }
     });
+
+    this.taskService.getCompletTask().subscribe((data: any) => {
+      this.tasks = Array.isArray(data) ? data[0] : data;
+    })
   }
 }
