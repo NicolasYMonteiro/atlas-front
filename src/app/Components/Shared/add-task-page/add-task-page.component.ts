@@ -11,10 +11,9 @@ import { ToggleClass } from './toggleClass';
 import { SubTaskCreateListComponent } from '../sub-task-create-list/sub-task-create-list.component'
 
 @Component({
-  selector: 'add-task-page',
-  standalone: true,
-  imports: [CommonModule, NgxMaterialTimepickerModule, FormsModule, NgOptimizedImage, SubTaskCreateListComponent],
-  templateUrl: './add-task-page.component.html',
+    selector: 'add-task-page',
+    imports: [CommonModule, NgxMaterialTimepickerModule, FormsModule, NgOptimizedImage, SubTaskCreateListComponent],
+    templateUrl: './add-task-page.component.html'
 })
 export class AddTaskPageComponent {
 

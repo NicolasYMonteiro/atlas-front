@@ -8,10 +8,9 @@ import { SubTask } from '../../../Models/subtTask.model';
 import { format, parse } from 'date-fns';
 
 @Component({
-  selector: 'check-task',
-  standalone: true,
-  imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule],
-  templateUrl: './check-task.component.html',
+    selector: 'check-task',
+    imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule],
+    templateUrl: './check-task.component.html'
 })
 export class CheckTaskComponent {
   @Input() data!: TaskClassico;

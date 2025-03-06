@@ -3,10 +3,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'topbar',
-  standalone: true,
-  imports: [NgOptimizedImage],
-  templateUrl: './top-bar.component.html',
+    selector: 'topbar',
+    imports: [NgOptimizedImage],
+    templateUrl: './top-bar.component.html'
 })
 export class TopBarComponent {
 

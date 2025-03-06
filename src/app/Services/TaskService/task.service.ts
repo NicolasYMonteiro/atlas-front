@@ -76,7 +76,7 @@ export class TaskService {
     const token = this.token();
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `${token}`);
-      return this.http.post<any>(`${this.url}/complete`, { headers })
+      return this.http.get<any>(`${this.url}/complete`, { headers });
     } else {
       return of(null);
     }

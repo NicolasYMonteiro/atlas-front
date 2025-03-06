@@ -4,10 +4,9 @@ import {TaskClassico} from '../../../Models/task.model';
 
 
 @Component({
-  selector: 'task',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './task.component.html',
+    selector: 'task',
+    imports: [CommonModule],
+    templateUrl: './task.component.html'
 })
 export class TaskComponent {
   @Input() data!: TaskClassico;

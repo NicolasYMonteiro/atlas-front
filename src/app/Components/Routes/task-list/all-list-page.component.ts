@@ -24,10 +24,9 @@ export interface Section {
 }
 
 @Component({
-  selector: 'all-list-page',
-  standalone: true,
-  imports: [CommonModule, TopBarComponent, TaskComponent, AddButtomComponent, AddTaskPageComponent, DisplayTaskPageComponent, CheckTaskComponent, EditTaskPageComponent],
-  templateUrl: './all-list-page.component.html'
+    selector: 'all-list-page',
+    imports: [CommonModule, TopBarComponent, TaskComponent, AddButtomComponent, AddTaskPageComponent, DisplayTaskPageComponent, CheckTaskComponent, EditTaskPageComponent],
+    templateUrl: './all-list-page.component.html'
 })
 
 export class AllListPageComponent implements OnInit {

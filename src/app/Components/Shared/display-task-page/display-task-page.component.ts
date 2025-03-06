@@ -8,10 +8,9 @@ import { SubTask } from '../../../Models/subtTask.model';
 import { TaskService } from '../../../Services/TaskService/task.service';
 
 @Component({
-  selector: 'display-task',
-  standalone: true,
-  imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule],
-  templateUrl: './display-task-page.component.html',
+    selector: 'display-task',
+    imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule],
+    templateUrl: './display-task-page.component.html'
 })
 export class DisplayTaskPageComponent implements OnInit {
 

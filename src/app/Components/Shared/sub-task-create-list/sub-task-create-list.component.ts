@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-sub-task-create-list',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './sub-task-create-list.component.html',
-  styleUrl: './sub-task-create-list.component.scss'
+    selector: 'app-sub-task-create-list',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './sub-task-create-list.component.html',
+    styleUrl: './sub-task-create-list.component.scss'
 })
 
 export class SubTaskCreateListComponent {

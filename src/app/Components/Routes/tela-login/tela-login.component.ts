@@ -11,10 +11,9 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../Services/userService/user.service';
 
 @Component({
-  selector: 'app-tela-login',
-  standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './tela-login.component.html',
+    selector: 'app-tela-login',
+    imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    templateUrl: './tela-login.component.html'
 })
 
 

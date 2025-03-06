@@ -8,11 +8,10 @@ import { UserService } from '../Services/userService/user.service';
 import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, TopBarComponent, SideBarComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [CommonModule, RouterOutlet, TopBarComponent, SideBarComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'FrontEnd-Angular';

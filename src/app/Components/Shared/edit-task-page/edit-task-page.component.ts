@@ -9,10 +9,9 @@ import { SubTaskCreateListComponent } from '../sub-task-create-list/sub-task-cre
 import { SubTask } from '../../../Models/subtTask.model';
 
 @Component({
-  selector: 'edit-task',
-  standalone: true,
-  imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule, SubTaskCreateListComponent],
-  templateUrl: './edit-task-page.component.html',
+    selector: 'edit-task',
+    imports: [NgOptimizedImage, CommonModule, NgxMaterialTimepickerModule, FormsModule, SubTaskCreateListComponent],
+    templateUrl: './edit-task-page.component.html'
 })
 export class EditTaskPageComponent implements OnInit {
   @Input() data!: TaskClassico; // Quando clico em uma Task do All-list-page carrega as info

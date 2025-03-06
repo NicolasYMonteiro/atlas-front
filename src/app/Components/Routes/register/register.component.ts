@@ -11,10 +11,9 @@ import { UserService } from '../../../Services/userService/user.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './register.component.html',
+    selector: 'app-register',
+    imports: [FormsModule, CommonModule, ReactiveFormsModule],
+    templateUrl: './register.component.html'
 })
 
 
