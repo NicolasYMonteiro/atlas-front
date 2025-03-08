@@ -1,4 +1,4 @@
-<section class="bg-gray-100 w-full max-h-[85vh] p-2  border-2 border-black rounded-2xl overflow-y-auto">
+<section class="bg-gray-100 w-full max-h-[85vh] p-2  border border-black rounded-2xl overflow-y-auto">
   <form (ngSubmit)="saveTask()" novalidate>
     <section class="relative flex items-center justify-center">
       <p class="mt-1 text-lg italic">Criação de Nova Tarefa</p>
@@ -81,15 +81,25 @@
       <input [(ngModel)]="data.hour" type="time" name="time" id="input-time" class="ml-2 w-32 h-9 text-lg rounded-md bg-white shadow-md" required>
     </section>
 
-    <section class="mt-4 flex flex-col items-center">
-      <div class="flex items-center">
-        <button type="button" class="w-8 h-8 bg-white rounded-full border shadow-md" (click)="toggleSectionSubVisibility()">
-          <img src="./icon-verif-button.png" width="32px" height="32px" *ngIf="toggle.isVerifSub">
-        </button>
-        <p class="ml-2 text-lg font-bold">Deseja ter sub tarefas?</p>
+    <section class="mt-4 flex flex-col w-full">
+      <div class="flex flex-row items-center justify-start">
+        <p class="ml-2 text-lg font-bold">Subtarefas</p>
       </div>
-      <app-sub-task-create-list *ngIf="toggle.isVerifSub" (SavedTask)="handleSavedTask($event)" [subTasks]="subTasks"/>
+      
+      <div *ngFor="let task of subTasks; let i = index; trackBy: trackByIndex" class="flex gap-2 items-center mt-2">
+        <textarea [(ngModel)]="subTasks[i].title" name="subtask-{{i}}" 
+          class="w-full rounded-md border border-none resize-none p-1 h-16 text-lg shadow-md " 
+          placeholder="Escreva aqui sua subtarefa"></textarea>
+        
+        <button type="button" (click)="removeSubTask(i)" 
+          class="px-4 py-2 bg-red-500 text-white rounded-md">Excluir</button>
+      </div>
+      
+      
+      <button type="button" (click)="addSubTask()" 
+        class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">Adicionar Subtarefa</button>
     </section>
+    
 
     <section class="mt-4 flex justify-center">
       <button class="w-32 h-12 text-lg font-bold bg-white border shadow-md rounded-l-full" type="submit" [disabled]="!isFormValid()">Salvar</button>

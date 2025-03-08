@@ -49,8 +49,6 @@ export class AllListPageComponent implements OnInit {
   tasks: TaskClassico[] = [];
 
   ngOnInit(): void {
-    console.log("tasks: ", this.userData)
-
     this.taskService.getTaskData().subscribe((data: any) => {
       if (data) {
         console.log("DATA task: ", data)
@@ -61,7 +59,7 @@ export class AllListPageComponent implements OnInit {
           task.description,
           task.emergency,
           task.periodical,
-          task.date ? format(parseISO(task.date), 'yyyy-MM-dd') : '',
+          task.date ? task.date.split('T')[0] : '',
           task.interval,
           task.hour,
           task.multiple,
@@ -70,6 +68,7 @@ export class AllListPageComponent implements OnInit {
 
         ));
       }
+      console.log("tasks: ", this.tasks)
       this.calculateSections(); // calculateSections após atualizar tasks
 
     });

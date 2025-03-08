@@ -26,7 +26,7 @@ export class PageAccountComponent implements OnInit {
   };
 
   tasks: any[] = [];
-  chart: any;
+  charts: any;
 
   ngOnInit() {
     this.userService.getUserData().subscribe((data: any) => {
@@ -44,56 +44,94 @@ export class PageAccountComponent implements OnInit {
       this.tasks = data || [];
       console.log('Tasks:', this.tasks);
       setTimeout(() => {
-        this.generateConsistencyChart();
-      }, 100);
+        this.generateConsistencyCharts();
+      }, 500);
     });
   }
-
-  generateConsistencyChart() {
-    // Verifica se o elemento canvas está disponível
-    const ctx = document.getElementById('consistencyChart') as HTMLCanvasElement;
-    if (!ctx) {
-      console.error('Canvas não encontrado!');
-      return;
-    }
-
-    // Filtra apenas tarefas periódicas
+ 
+  generateConsistencyCharts() {
     const periodicTasks = this.tasks.filter(task => task.periodical);
-
-    // Cria os dados para o gráfico
-    const labels = periodicTasks.map(task => task.title);
-    const data = periodicTasks.map(task =>
-      task.interval > 0 ? task.taskCompletion.length / task.interval : 0
-    );
-
-    console.log('Labels:', labels);
-    console.log('Data:', data);
-
-    // Remove gráfico anterior se existir
-    if (this.chart) {
-      this.chart.destroy();
+  
+    // Destroi gráficos anteriores (se existirem)
+    if (this.charts) {
+      this.charts.forEach((chart: { destroy: () => any; }) => chart.destroy());
     }
-
-    // Criar o gráfico
-    this.chart = new Chart(ctx, { // <- Usa o ctx aqui
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Consistência (Feito/Intervalo)',
-          data,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
+    this.charts = []; // Resetando array de gráficos
+  
+    const today = new Date();
+    
+    periodicTasks.forEach((task, index) => {
+      const canvasId = `consistencyChart-${index}`;
+      const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+      if (!canvas) {
+        console.error(`Canvas ${canvasId} não encontrado!`);
+        return;
+      }
+  
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        console.error(`Contexto 2D do Canvas ${canvasId} não encontrado!`);
+        return;
+      }
+  
+      const labels: string[] = [];
+      const doneData: number[] = [];
+  
+      const startDate = new Date(task.dateCreator);
+      const interval = task.interval || 1;
+      const completedDates = new Set(
+        task.taskCompletion.map((comp: any) => new Date(comp.completion).toISOString().split('T')[0])
+      );
+  
+      const fifteenDaysAgo = new Date();
+      fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
+  
+      for (let d = new Date(startDate.getTime()); d <= today; d.setDate(d.getDate() + interval)) {
+        const formattedDate = d.toISOString().split('T')[0];
+  
+        if (d >= fifteenDaysAgo) {
+          labels.push(formattedDate);
+          doneData.push(completedDates.has(formattedDate) ? 1 : 0);
         }
       }
+  
+      // Criando gráfico individual para a tarefa
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: `${task.title}`,
+              data: doneData,
+              borderColor: 'rgba(54, 162, 235, 1)',
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderWidth: 3,
+              fill: false,
+              tension: 0.1,
+              borderCapStyle: 'round'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { title: { display: true, text: 'Datas' } },
+            y: {
+              title: { display: true, text: 'Feito (1) / Não Feito (0)' },
+              ticks: {
+                stepSize: 1,
+                callback: (value) => (value === 1 ? 'Feito' : 'Não Feito')
+              },
+              min: 0,
+              max: 1
+            }
+          }
+        }
+      });
+  
+      this.charts.push(chart); // Armazena gráfico para futura destruição
     });
   }
-
+  
 }

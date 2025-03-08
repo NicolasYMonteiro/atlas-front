@@ -64,10 +64,6 @@ export class EditTaskPageComponent implements OnInit {
     this.subTasks.splice(index, 1);
   }
 
-  emitSubtask() {
-    this.savedTask.emit(this.subTasks); // Emite o vetor de subtarefas completo
-  }
-
   trackByIndex(index: number, item: any): number {
     return index;
   }

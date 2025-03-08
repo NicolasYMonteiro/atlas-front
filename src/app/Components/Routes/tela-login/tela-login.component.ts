@@ -45,6 +45,8 @@ export class TelaLoginComponent {
     this.userService.postLogin(this.loginForm.value).subscribe({
       next: (response) => {
         localStorage.setItem('authToken', response.token); // Salvar token no localStorage
+        this.router.navigate(['/home']);
+
       },
       error: (error) => {
         this.message = "Email ou senha incorretos!";

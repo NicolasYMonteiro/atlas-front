@@ -4,6 +4,7 @@ import { AllListPageComponent } from '../Components/Routes/task-list/all-list-pa
 import { RegisterComponent } from '../Components/Routes/register/register.component';
 import { TelaLoginComponent } from '../Components/Routes/tela-login/tela-login.component';
 import { PageAccountComponent } from '../Components/Routes/account/page-account.component';
+import { AboutComponent } from '../Components/Routes/about/about.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -11,6 +12,7 @@ export const routes: Routes = [
     {path: 'all-lists', component: AllListPageComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: TelaLoginComponent},
-    {path: 'account', component: PageAccountComponent}
+    {path: 'account', component: PageAccountComponent},
+    {path: 'about', component: AboutComponent}
 
 ];

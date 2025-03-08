@@ -9,16 +9,16 @@ import { TaskClassico } from '../../../Models/task.model';
 import { ToggleClass } from './toggleClass';
 
 import { SubTaskCreateListComponent } from '../sub-task-create-list/sub-task-create-list.component'
+import { SubTask } from '../../../Models/subtTask.model';
 
 @Component({
-    selector: 'add-task-page',
-    imports: [CommonModule, NgxMaterialTimepickerModule, FormsModule, NgOptimizedImage, SubTaskCreateListComponent],
-    templateUrl: './add-task-page.component.html'
+  selector: 'add-task-page',
+  imports: [CommonModule, NgxMaterialTimepickerModule, FormsModule, NgOptimizedImage, SubTaskCreateListComponent],
+  templateUrl: './add-task-page.component.html'
 })
 export class AddTaskPageComponent {
 
   toggle: ToggleClass;
-  subTasks: string[] = []; // Recebe as subtarefas
 
   constructor(private taskService: TaskService, private subtTaskService: SubTaskService) {
     this.toggle = new ToggleClass(this.data);
@@ -27,12 +27,37 @@ export class AddTaskPageComponent {
   @Output() closeAddTaskEvent = new EventEmitter<void>();
   @Output() saveTaskEvent = new EventEmitter<any[]>();
 
+  subTasks: { title: string, verif: boolean }[] = [];
+
+  ngOnInit() {
+    this.subTasks = []; // Garante que o array não é recriado indevidamente
+  }
+  maxSubTasks: number = 10; // Limite de subtarefas
+
+  addSubTask() {
+    if (this.subTasks.length < this.maxSubTasks) {
+      this.subTasks = [...this.subTasks, { title: '', verif: false }];
+      console.log("addSubTask: ", this.subTasks)
+    } else {
+      alert('Limite de subtarefas atingido.');
+    }
+  }
+
+  removeSubTask(index: number) {
+    this.subTasks.splice(index, 1);
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
+
 
   @ViewChild(SubTaskCreateListComponent) subTaskComponent!: SubTaskCreateListComponent;
 
   closeAddTask() {
     this.closeAddTaskEvent.emit();
   }
+
 
   data: TaskClassico = new TaskClassico(
     0, // id
@@ -53,13 +78,26 @@ export class AddTaskPageComponent {
       this.data.interval = Number(this.data.interval);
       this.data.date = new Date(this.data.date).toISOString();
       this.data.dateCreator = new Date().toISOString();
-      const { id, ...requestData } = this.data;
 
-      console.log("Enviando dados formatados:", requestData);
+      console.log("subTask: ", this.subTasks);;
 
-      this.taskService.postTask(requestData).subscribe({
+      const payload = {
+        title: this.data.title,
+        description: this.data.description,
+        emergency: this.data.emergency || false,
+        periodical: this.data.periodical || false,
+        date: new Date(this.data.date).toISOString(),
+        interval: Number(this.data.interval), // Garante que é string, se a API esperar isso
+        hour: this.data.hour,
+        multiple: this.subTasks.length > 0, // Define se tem múltiplas tarefas
+        dateCreator: new Date().toISOString(),
+        multipleTask: this.subTasks // Sempre enviar como array
+      };
+
+      console.log("Enviando payload:", payload);
+
+      this.taskService.postTask(payload).subscribe({
         next: (res) => {
-          this.handleSavedTask(this.subTasks);
           this.closeAddTask();
           window.location.reload();
         },
@@ -68,18 +106,6 @@ export class AddTaskPageComponent {
         }
       });
     }
-  }
-
-  handleSavedTask(subTasks: string[]) {
-    if (subTasks.length > 0) {
-      this.subtTaskService.postSubTask(this.data.id, subTasks).subscribe({
-        next: () => {
-          console.log("tudo certo, paizão")
-        },
-        error: (err) => { console.error('Erro ao adicionar a sub tarefa:', err); }
-      });
-    }
-
   }
 
   isFormValid() {

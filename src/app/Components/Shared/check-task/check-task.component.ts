@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { TaskClassico } from '../../../Models/task.model';
 import { TaskService } from '../../../Services/TaskService/task.service';
 import { SubTask } from '../../../Models/subtTask.model';
-import { format, parse } from 'date-fns';
+import { addDays, format, parse, parseISO } from 'date-fns';
 
 @Component({
     selector: 'check-task',
@@ -56,9 +56,14 @@ export class CheckTaskComponent {
   }
 
   finalizarTask() {
-    console.log("finalizar")
+    console.log("finalizar");
+    console.log("date pré: ", this.data.date);
+    console.log("interval: ", this.data.interval);
+
+    this.data.date = format(addDays(parseISO(new Date().toISOString()), this.data.interval), 'yyyy-MM-dd');
     this.taskService.completTask(this.data.id).subscribe({
       next: () => {
+        this.salvarProgresso();
         console.log("Tarefa concluida com sucesso!");
         this.closeCheckTask();
         window.location.reload();
@@ -82,7 +87,7 @@ export class CheckTaskComponent {
       description: this.data.description,
       emergency: this.data.emergency || false,
       periodical: this.data.periodical || false,
-      date: this.data.date,
+      date: new Date(this.data.date).toISOString(),
       interval: Number(this.data.interval), // Garante que é string, se a API esperar isso
       hour: this.data.hour,
       multiple: this.vetorSubTask.length > 0, // Define se tem múltiplas tarefas

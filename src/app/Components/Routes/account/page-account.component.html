@@ -1,7 +1,7 @@
 <section class="pt-5 px-4">
     <!-- Perfil do Usuário -->
     <section class="flex items-center mb-4 bg-white p-3 rounded-lg shadow-md border border-gray-200">
-      <img ngSrc="/user.png" alt="Foto do usuário" width="80" height="80" class="rounded-full border-2 border-gray-300 shadow-sm">
+      <img src="/user.png" alt="Foto do usuário" width="80" height="80" class="rounded-full shadow-sm">
       <div class="flex flex-col justify-center gap-1 ml-4" *ngIf="userData">
         <p class="text-xl font-semibold text-gray-800">{{ userData.name }}</p>
         <p class="text-lg text-gray-600">{{ userData.email }}</p>
@@ -11,13 +11,18 @@
     <hr class="border-gray-300">
 
     <section class="flex flex-col items-center mt-4 bg-white p-3 rounded-lg shadow-md border border-gray-200">
-      <p class="text-2xl font-semibold text-gray-800">Relatórios</p>
+      <p class="text-2xl font-semibold text-gray-800">Relatório</p>
+      <p class="text-xl font-semibold text-gray-800">Consistência das Tarefas Periódicas</p>
 
-      <div class="w-full">
-        <p class="text-xl font-semibold text-gray-800">Consistência das Tarefas Periódicas</p>
-        <canvas id="consistencyChart"></canvas>
+      <div class="w-full mt-8">
+    
+        <div *ngFor="let task of tasks; let i = index">
+          <p class="text-lg font-semibold text-gray-700">{{ task.title }}</p>
+          <canvas [id]="'consistencyChart-' + i" class="max-h-60"></canvas>
+        </div>
+    
       </div>
-  </section>y
+  </section>
 
   </section>
   
